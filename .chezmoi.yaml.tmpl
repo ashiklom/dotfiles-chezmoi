@@ -1,0 +1,9 @@
+sourceDir: {{ .chezmoi.sourceDir }}
+
+data:
+  ostype: {{ .chezmoi.os | quote }}
+
+  is_macos: {{ eq .chezmoi.os "darwin" }}
+  is_linux: {{ eq .chezmoi.os "linux" }}
+
+# vim: filetype=yaml :

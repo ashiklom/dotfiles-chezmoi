@@ -1,0 +1,8 @@
+# Use neovim for vim
+{{ if lookPath "nvim" }}
+export EDITOR=nvim
+{{ else }}
+export EDITOR=vim
+{{ end }}
+
+# vim: set filetype=zsh :

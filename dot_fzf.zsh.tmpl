@@ -1,0 +1,15 @@
+source <(fzf --zsh)
+
+{{ if lookPath "fd" }}
+# FZF_SEARCH="--search-path $HOME --search-path $HOME/.config --search-path $HOME/.local"
+_fzf_compgen_path() {
+  fd --hidden --follow --exclude ".git" . "$1"
+}
+_fzf_compgen_dir() {
+  fd --type d --hidden --follow --exclude ".git"
+}
+FZF_SEARCH=""
+export FZF_DEFAULT_COMMAND="fd . -t f $FZF_SEARCH"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="fd -t d . $FZF_SEARCH"
+{{ end }}
