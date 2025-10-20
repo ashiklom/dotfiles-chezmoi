@@ -1,0 +1,80 @@
+local wezterm = require 'wezterm'
+
+local config = wezterm.config_builder()
+
+local act = wezterm.action
+
+config.color_scheme = 'Catppuccin Mocha'
+-- Disable ligatures
+config.harfbuzz_features = { 'calt = 0', 'clig = 0', 'liga = 0' }
+
+-- No easing of cursor blink
+config.cursor_blink_ease_in = "Constant"
+config.cursor_blink_ease_out = "Constant"
+config.cursor_blink_rate = 600
+
+config.adjust_window_size_when_changing_font_size = false
+
+config.keys = {
+  {
+    key = "{",
+    mods = "CTRL|SHIFT",
+    action = act.ActivateTabRelative(-1)
+  },
+  {
+    key = "}",
+    mods = "CTRL|SHIFT",
+    action = act.ActivateTabRelative(1)
+  },
+  {
+    key = "s",
+    mods = "CTRL|SHIFT",
+    action = act.SplitHorizontal {domain = "CurrentPaneDomain"}
+  },
+  {
+    key = "d",
+    mods = "CTRL|SHIFT",
+    action = act.SplitVertical {domain = "CurrentPaneDomain"}
+  },
+}
+
+local io = require 'io'
+local os = require 'os'
+
+wezterm.on('trigger-vim-with-scrollback', function(window, pane)
+  -- Retrieve the text from the pane
+  local text = pane:get_lines_as_text(pane:get_dimensions().scrollback_rows)
+
+  -- Create a temporary file to pass to vim
+  local name = os.tmpname()
+  local f = io.open(name, 'w+')
+  f:write(text)
+  f:flush()
+  f:close()
+
+  -- Open a new window running vim and tell it to open the file
+  window:perform_action(
+    -- Change to "NewWindow" for separate window
+    act.SpawnCommandInNewTab {
+      args = { 'nvim', name },
+    },
+    pane
+  )
+
+  -- Wait "enough" time for vim to read the file before we remove it.
+  -- The window creation and process spawn are asynchronous wrt. running
+  -- this script and are not awaitable, so we just pick a number.
+  --
+  -- Note: We don't strictly need to remove this file, but it is nice
+  -- to avoid cluttering up the temporary directory.
+  wezterm.sleep_ms(1000)
+  os.remove(name)
+end)
+
+table.insert(config.keys, {
+  key = 'E',
+  mods = 'CTRL|SHIFT',
+  action = act.EmitEvent 'trigger-vim-with-scrollback',
+})
+
+return config
