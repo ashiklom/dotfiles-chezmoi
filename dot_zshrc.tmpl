@@ -101,7 +101,7 @@ if [[ -f "$HOME/.local/share/aws_sso_comp" ]]; then
   source "$HOME/.local/share/aws_sso_comp"
 fi
 
-{{- if and (.is_macos) (stat (joinPath .chezmoi.homedir "Applications/WezTerm.app/Contents/MacOS")) }}
+{{- if and (.is_macos) (stat (joinPath .chezmoi.homeDir "Applications/WezTerm.app/Contents/MacOS")) }}
 WEZTERM_DIR="$HOME/Applications/WezTerm.app/Contents/MacOS"
 if [[ -d $WEZTERM_DIR ]]; then
   path=($WEZTERM_DIR $path)
