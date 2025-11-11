@@ -56,7 +56,11 @@ wezterm.on('trigger-vim-with-scrollback', function(window, pane)
   window:perform_action(
     -- Change to "NewWindow" for separate window
     act.SpawnCommandInNewTab {
+{{- if .is_macos }}
+      args = { '/opt/homebrew/bin/nvim', name },
+{{- else }}
       args = { 'nvim', name },
+{{- end}}
     },
     pane
   )
@@ -78,3 +82,5 @@ table.insert(config.keys, {
 })
 
 return config
+
+-- vim: set filetype=lua :
