@@ -63,6 +63,10 @@ if [[ -f "$HOME/.profile" ]]; then
     source "$HOME/.profile"
 fi
 
+# Disable grep colors (set by zim above)
+unset GREP_COLOR
+unset GREP_COLORS
+
 hascmd() {
   command -v $1 >/dev/null
 }
