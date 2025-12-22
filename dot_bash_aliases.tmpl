@@ -57,3 +57,11 @@ apache() {
 ghostic() {
   infocmp -x xterm-ghostty | ssh "$@" -- tic -x -
 }
+
+{{- if (.is_wsl) }}
+open() {
+  /mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -c start $@
+}
+{{- end }}
+
+# vim: set filetype=sh :

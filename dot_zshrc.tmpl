@@ -89,16 +89,17 @@ if [ -f "$MY_SPACKDIR/share/spack/setup-env.sh" ]; then
   source "$MY_SPACKDIR/share/spack/setup-env.sh"
 fi
 
-[ -f "$HOME/.bash_aliases" ] && \. "$HOME/.bash_aliases"
-[ -f "$HOME/.zsh_windows" ] && \. "$HOME/.zsh_windows"
-
 if hascmd tv; then
   eval "$(tv init zsh)"
 fi
 
-{{- if stat (joinPath .chezmoi.homeDir ".juliaup/bin")}}
-path=('/Users/ashiklom/.juliaup/bin' $path)
-{{- end }}
+if [[ -d "$HOME/.pixi/bin/" ]]; then
+  path=("$HOME/.pixi/bin" $path)
+fi
+
+if [[ -d "$HOME/.juliaup/bin" ]]; then
+  path=("$HOME/.juliaup/bin" $path)
+fi
 
 # Completions for AWS SSO
 if [[ -f "$HOME/.local/share/aws_sso_comp" ]]; then
@@ -112,8 +113,11 @@ if [[ -d $WEZTERM_DIR ]]; then
 fi
 {{- end }}
 
+[ -f "$HOME/.bash_aliases" ] && \. "$HOME/.bash_aliases"
+
 # Deduplicate PATH
 typeset -U PATH
 export PATH
+
 # zprof
 # vim: set filetype=zsh :
