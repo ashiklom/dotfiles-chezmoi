@@ -59,17 +59,9 @@ unset key
 
 # End configuration added by Zim install
 
-if [[ -f "$HOME/.profile" ]]; then
-    source "$HOME/.profile"
-fi
-
 # Disable grep colors (set by zim above)
 unset GREP_COLOR
 unset GREP_COLORS
-
-hascmd() {
-  command -v $1 >/dev/null
-}
 
 # Add incremental search key
 # NOTE: `fzf` (below) will override this if installed
@@ -89,16 +81,8 @@ if [ -f "$MY_SPACKDIR/share/spack/setup-env.sh" ]; then
   source "$MY_SPACKDIR/share/spack/setup-env.sh"
 fi
 
-if hascmd tv; then
+if command -v tv &> /dev/null; then
   eval "$(tv init zsh)"
-fi
-
-if [[ -d "$HOME/.pixi/bin/" ]]; then
-  path=("$HOME/.pixi/bin" $path)
-fi
-
-if [[ -d "$HOME/.juliaup/bin" ]]; then
-  path=("$HOME/.juliaup/bin" $path)
 fi
 
 # Completions for AWS SSO

@@ -1,0 +1,36 @@
+#!/usr/bin/env sh
+
+{{- if .is_macos }}
+eval "$(/opt/homebrew/bin/brew shellenv)"
+{{- end }}
+
+[ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
+
+if [ -d "$HOME/.pixi/bin" ]; then
+  export PATH=$PATH:$HOME/.pixi/bin
+fi
+
+[ -f "$HOME/.cargo/env" ] && \. "$HOME/.cargo/env"
+
+# >>> juliaup initialize >>>
+
+# !! Contents within this block are managed by juliaup !!
+
+case ":$PATH:" in
+    *:/Users/ashiklom/.juliaup/bin:*)
+        ;;
+
+    *)
+        export PATH=/Users/ashiklom/.juliaup/bin${PATH:+:${PATH}}
+        ;;
+esac
+
+# <<< juliaup initialize <<<
+
+if command -v nvim > /dev/null; then
+  export EDITOR=nvim
+else
+  export EDITOR=vim
+fi
+
+# vim: set filetype=sh :
