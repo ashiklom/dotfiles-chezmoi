@@ -7,3 +7,7 @@
 [user]
 	name = Alexey Shiklomanov
 	email = alexey.shiklomanov@gmail.com
+[credential]
+	helper = cache
+[init]
+	defaultBranch = main
