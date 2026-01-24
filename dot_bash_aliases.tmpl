@@ -10,12 +10,14 @@ if alias pivssh &> /dev/null; then
   unalias pivssh
 fi
 
+{{- if .is_macos }}
 pivssh() {
   # Remove existing keys (if present)
   ssh-add -L | grep 'PIV\|Digital Signature' | ssh-add -d -
   # ...and then refresh the input
   ssh-add -s /usr/lib/ssh-keychain.dylib
 }
+{{- end }}
 
 awsprof() {
   if ! command -v aws-sso-profile >/dev/null; then
@@ -61,6 +63,10 @@ ghostic() {
 {{- if (.is_wsl) }}
 open() {
   /mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -c start $@
+}
+
+wezterm() {
+  "/mnt/c/Program Files/WezTerm/wezterm.exe" $@
 }
 {{- end }}
 
