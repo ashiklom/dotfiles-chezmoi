@@ -6,5 +6,6 @@ data:
   is_macos: {{ eq .chezmoi.os "darwin" }}
   is_linux: {{ eq .chezmoi.os "linux" }}
   is_wsl: {{ and (eq .chezmoi.os "linux") (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
+  is_nasa: {{ hasSuffix "nasa.gov" .chezmoi.fqdnHostname }}
 
 # vim: filetype=yaml :

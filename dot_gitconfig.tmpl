@@ -6,7 +6,11 @@
 	helper = !/usr/bin/gh auth git-credential
 [user]
 	name = Alexey Shiklomanov
+{{- if .is_nasa }}
+	email = alexey.shiklomanov@nasa.gov
+{{- else }}
 	email = alexey.shiklomanov@gmail.com
+{{- end }}
 [credential]
 	helper = cache
 [init]
