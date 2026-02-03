@@ -59,9 +59,24 @@ unset key
 
 # End configuration added by Zim install
 
-# Disable grep colors (set by zim above)
-unset GREP_COLOR
-unset GREP_COLORS
+# Configure colors
+{{ $c := .colors }}
+
+export GREP_COLORS="\
+  ms=1;38;2;{{ $c.yellow }}:\
+  mc=1;38;2;{{ $c.yellow }}:\
+  fn=38;2;{{ $c.blue }}:\
+  ln=38;2;{{ $c.peach }}:\
+  bn=38;2;{{ $c.green }}:\
+  se=38;2;{{ $c.mauve }}"
+
+if [[ -f "$HOME/.dircolors" ]]; then
+  if command -v gdircolors &> /dev/null; then
+    eval "$(gdircolors $HOME/.dircolors)"
+  elif command -v dircolors &> /dev/null; then
+    eval "$(dircolors $HOME/.dircolors)"
+  fi
+fi
 
 # Add incremental search key
 # NOTE: `fzf` (below) will override this if installed

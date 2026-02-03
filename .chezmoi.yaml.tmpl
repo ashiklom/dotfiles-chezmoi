@@ -8,4 +8,25 @@ data:
   is_wsl: {{ and (eq .chezmoi.os "linux") (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
   is_nasa: {{ hasSuffix "nasa.gov" .chezmoi.fqdnHostname }}
 
+  colors:
+    text: "205;214;244"
+    blue: "137;180;250"
+    green: "166;227;161"
+    yellow: "249;226;175"
+    peach: "250;179;135"
+    mauve: "203;166;247"
+
+    # hex colors for zsh
+    surface0: "#1e1e2e"
+    surface1: "#45475a"
+    surface2: "#585b70"
+
+    text_hex: "#cdd6f4"
+    blue_hex: "#89b4fa"
+    green_hex: "#a6e3a1"
+    yellow_hex: "#f9e2af"
+    mauve_hex: "#cba6f7"
+    comment_hex: "#6c7086"
+
+
 # vim: filetype=yaml :

@@ -1,0 +1,12 @@
+{{- $c := .colors -}}
+TERM xterm-256color
+NORMAL 38;2;{{ $c.text }}
+
+DIR   38;2;{{ $c.blue }}
+LINK  38;2;{{ $c.mauve }}
+EXEC  38;2;{{ $c.green }}
+SOCK  38;2;{{ $c.yellow }}
+FIFO  38;2;{{ $c.peach }}
+
+*.py  38;2;{{ $c.green }}
+*.sh  38;2;{{ $c.green }}
