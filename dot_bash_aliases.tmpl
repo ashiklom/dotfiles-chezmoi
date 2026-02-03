@@ -47,6 +47,49 @@ azlogin() {
   azsubid
 }
 
+azactivate() {
+  JUSTIFICATION="work"
+  DURATION="PT8H"
+  API_VERSION="2020-10-01-preview"
+  REQUEST_GUID=$(uuidgen)
+
+  AZRESULT=$(az rest --method get --url \
+    "https://management.azure.com/providers/Microsoft.Authorization/roleEligibilityScheduleInstances?api-version=${API_VERSION}&\$filter=asTarget()")
+
+  OWNER_JSON=$(jq '.value[] | select(.properties.expandedProperties.roleDefinition.displayName == "Owner")' <<<$AZRESULT)
+  PRINCIPAL_ID=$(jq -r '.properties.expandedProperties.principal.id' <<<$OWNER_JSON)
+  ROLE_DEFINITION_ID=$(jq -r '.properties.expandedProperties.roleDefinition.id' <<<$OWNER_JSON)
+  SUBSCRIPTION_ID=$(jq -r '.properties.expandedProperties.scope.id' <<<$OWNER_JSON)
+  ELIGIBILITY_SCHEDULE_ID=$(jq -r '.properties.roleEligibilityScheduleId' <<<$OWNER_JSON)
+
+  REQUEST_BODY=$(jq -n \
+    --arg principalID "$PRINCIPAL_ID" \
+    --arg roleDefID "$ROLE_DEFINITION_ID" \
+    --arg justification "$JUSTIFICATION" \
+    --arg duration "$DURATION" \
+    --arg eligibilityID "$ELIGIBILITY_SCHEDULE_ID" \
+    '{
+      "properties": {
+        "principalId": $principalID,
+        "roleDefinitionId": $roleDefID,
+        "requestType": "SelfActivate",
+        "linkedRoleEligibilityScheduleId": $eligibilityID,
+        "justification": $justification,
+        "scheduleInfo": {
+          "expiration": {
+            "type": "AfterDuration",
+            "duration": $duration
+          }
+      }
+  }
+  }')
+
+  az rest --method put \
+    --url "https://management.azure.com${SUBSCRIPTION_ID}/providers/Microsoft.Authorization/roleAssignmentScheduleRequests/$REQUEST_GUID?api-version=${API_VERSION}" \
+    --body "$REQUEST_BODY"
+
+}
+
 apache() {
   LICENSEFILE="$HOME/.cache/apache_2_0"
   if [[ ! -f $LICENSEFILE ]]; then
