@@ -1,0 +1,18 @@
+# NOTE: Filter via include *first*, then strip components from the matches.
+# `include` needs to lead with `*` to actually get the archive contents.
+# Then, `stripComponents` is used to remove the prefix (here: `root/skills/`)
+[".agents/skills/skill-creator"]
+type = "archive"
+url = "https://github.com/anthropics/skills/archive/main.tar.gz"
+exact = true
+refreshPeriod = "672h"
+include = ["*/skills/skill-creator/**"]
+stripComponents = 3
+
+[".agents/skills/virtual-zarr"]
+type = "archive"
+url = "https://github.com/shiklomanov-an/virtual-zarr-skill/archive/main.tar.gz"
+exact = true
+refreshPeriod = "24h"
+include = ["*/virtual-zarr/**"]
+stripComponents = 2
