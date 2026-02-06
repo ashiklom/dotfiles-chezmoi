@@ -16,3 +16,11 @@ exact = true
 refreshPeriod = "24h"
 include = ["*/virtual-zarr/**"]
 stripComponents = 2
+
+[".agents/skills/r-targets"]
+type = "archive"
+url = "https://github.com/ashiklom/r-targets-skill/archive/main.tar.gz"
+exact = true
+refreshPeriod = "24h"
+include = ["*/r-targets/**"]
+stripComponents = 2
