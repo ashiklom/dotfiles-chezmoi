@@ -14,4 +14,6 @@ Focus on the skill's **intent and workflow** rather than literal tool names.
 
 # Code standards
 
-CRITICAL: Never install or update dependencies. If any necessary dependencies are missing, describe it and prompt for user input. 
+CRITICAL: Never install or update dependencies. If any necessary dependencies are missing, describe the missing dependencies and prompt for user input. 
+
+CRITICAL: If working on existing code, always adapt approaches and style consistent with the existing code, even if it violates patterns suggested by your instructions.
