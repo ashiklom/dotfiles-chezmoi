@@ -3,6 +3,10 @@ name: r-dev
 description: Use this skill whenever writing, debugging, or reviewing R code. Triggers include any R script creation, statistical analysis code, data visualization with ggplot2, tidyverse workflows, package development, Rmarkdown/Quarto documents, or when the user mentions .R/.Rmd files or R-specific packages. Apply these patterns for code style, data manipulation preferences, and project structure.
 ---
 
+# Formatting
+
+If `air` is installed, use `air format <script.R>` to format scripts or `air format <directory>` to format all R code in `<directory>`.
+
 # When to use tidyverse vs base R
 
 For new scripts, prefer tidyverse when:
