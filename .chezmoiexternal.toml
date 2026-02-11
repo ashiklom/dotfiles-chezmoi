@@ -24,3 +24,11 @@ exact = true
 refreshPeriod = "24h"
 include = ["*/r-targets/**"]
 stripComponents = 2
+
+[".agents/skills/xarray-skill"]
+type = "archive"
+url = "https://github.com/shiklomanov-an/xarray-skill/archive/main.tar.gz"
+exact = true
+refreshPeriod = "24h"
+include = ["*/xarray-skill/**"]
+stripComponents = 2
