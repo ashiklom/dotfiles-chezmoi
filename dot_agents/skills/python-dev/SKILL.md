@@ -3,6 +3,10 @@ name: python-dev
 description: Use this skill whenever writing, debugging, or reviewing Python code. Triggers include any Python script creation, code refactoring, debugging Python errors, package management with pip/conda, virtual environment setup, test writing, or when the user mentions .py files or Python-specific tools/libraries. Apply these patterns for code structure, logging, error handling, and architectural preferences.
 ---
 
+# Dependencies
+
+If you need to install, update, or otherwise modify Python dependencies, use the `python-dependencies` skill.
+
 # Python version
 
 Assume you are using Python 3.10 or greater; older versions have reached end of life.
