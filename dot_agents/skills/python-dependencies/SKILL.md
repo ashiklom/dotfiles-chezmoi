@@ -300,6 +300,39 @@ pixi run --environment default python script.py
 pixi shell --environment dev
 ```
 
+### Custom Activation Scripts
+
+Pixi supports running custom activation scripts when entering an environment. These scripts should be stored in your repository (NOT in `.pixi/`, which is transient and not version controlled).
+
+**Recommended location**: `.pixi-scripts/` or `scripts/` directory
+
+**Configure in pyproject.toml or pixi.toml:**
+
+```toml
+[activation]
+scripts = ["scripts/activate.sh"]
+```
+
+**Example activation script** (`scripts/activate.sh`):
+
+```bash
+#!/bin/bash
+# Set environment variables
+export DATA_DIR="${PIXI_PROJECT_ROOT}/data"
+export CONFIG_PATH="${PIXI_PROJECT_ROOT}/config.yaml"
+
+# Add project tools to PATH
+export PATH="${PIXI_PROJECT_ROOT}/bin:${PATH}"
+
+echo "✓ Project environment configured"
+```
+
+**Key points:**
+- Scripts run when entering environment via `pixi shell` or `pixi run`
+- Use `$PIXI_PROJECT_ROOT` to reference project root directory
+- Scripts are version controlled (unlike `.pixi/` directory)
+- Can set environment variables, configure paths, or run initialization tasks
+
 ### OpenCode LSP Integration for Pixi
 
 When using pixi projects with OpenCode, configure LSP servers to run inside the pixi environment. This ensures type checking, linting, and other language features use the correct Python interpreter and installed packages.
