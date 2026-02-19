@@ -215,6 +215,127 @@ def process_results(
 - Simple scripts under ~100 lines with obvious data flow
 - Performance-critical code where overhead matters (though dataclasses are quite fast)
 
+# Early Returns
+
+Prefer early returns over nested if/else structures. Early returns reduce nesting depth, make error conditions explicit upfront, and keep the main logic (the "happy path") unindented and easier to follow. This pattern helps agents reason about control flow more clearly.
+
+## Simple validation
+
+```python
+# ❌ Nested condition obscures main logic
+def load_config(path: Path) -> dict[str, Any]:
+    if path.exists():
+        with open(path) as f:
+            return json.load(f)
+    else:
+        return {}
+
+# ✅ Guard clause makes intent clear; main logic follows naturally
+def load_config(path: Path) -> dict[str, Any]:
+    if not path.exists():
+        return {}
+    
+    with open(path) as f:
+        return json.load(f)
+```
+
+## Multiple guard clauses
+
+```python
+# ❌ Deep nesting makes code hard to follow
+def process_data(data: list[float], threshold: float | None) -> list[float]:
+    if len(data) > 0:
+        if not any(math.isnan(x) for x in data):
+            if threshold is not None:
+                return [x for x in data if x > threshold]
+            else:
+                return data
+        else:
+            raise ValueError("Data contains NaN values")
+    else:
+        return []
+
+# ✅ Stack guard clauses at the top; happy path is clear and unindented
+def process_data(data: list[float], threshold: float | None) -> list[float]:
+    if len(data) == 0:
+        return []
+    if any(math.isnan(x) for x in data):
+        raise ValueError("Data contains NaN values")
+    if threshold is None:
+        return data
+    
+    return [x for x in data if x > threshold]  # Main logic is clear
+```
+
+## Raising exceptions as early exits
+
+```python
+# ❌ Nested validation with else blocks
+def calculate_metric(values: list[float]) -> float:
+    if isinstance(values, list):
+        if all(isinstance(x, (int, float)) for x in values):
+            if len(values) >= 3:
+                return statistics.mean(values) / statistics.stdev(values)
+            else:
+                raise ValueError("Need at least 3 values")
+        else:
+            raise TypeError("All values must be numeric")
+    else:
+        raise TypeError("values must be a list")
+
+# ✅ Validation guards upfront; calculation stands alone
+def calculate_metric(values: list[float]) -> float:
+    if not isinstance(values, list):
+        raise TypeError("values must be a list")
+    if not all(isinstance(x, (int, float)) for x in values):
+        raise TypeError("All values must be numeric")
+    if len(values) < 3:
+        raise ValueError("Need at least 3 values")
+    
+    return statistics.mean(values) / statistics.stdev(values)
+```
+
+## Dataclass and dict validation
+
+```python
+# ❌ Unnecessary else after conditional processing
+@dataclass
+class Config:
+    model_name: str
+    learning_rate: float
+    batch_size: int = 32
+
+def load_experiment(config_dict: dict[str, Any]) -> Config | None:
+    if "model_name" not in config_dict:
+        logging.warning("Missing model_name in config")
+        return None
+    else:
+        if "learning_rate" not in config_dict:
+            logging.warning("Missing learning_rate in config")
+            return None
+        else:
+            return Config(
+                model_name=config_dict["model_name"],
+                learning_rate=config_dict["learning_rate"],
+                batch_size=config_dict.get("batch_size", 32),
+            )
+
+# ✅ Handle validation early; construction has no unnecessary else blocks
+def load_experiment(config_dict: dict[str, Any]) -> Config | None:
+    if "model_name" not in config_dict:
+        logging.warning("Missing model_name in config")
+        return None
+    if "learning_rate" not in config_dict:
+        logging.warning("Missing learning_rate in config")
+        return None
+    
+    return Config(
+        model_name=config_dict["model_name"],
+        learning_rate=config_dict["learning_rate"],
+        batch_size=config_dict.get("batch_size", 32),
+    )
+```
+
 ## Paths
 
 Use `pathlib.Path` objects and their methods when representing and manipulating paths.
