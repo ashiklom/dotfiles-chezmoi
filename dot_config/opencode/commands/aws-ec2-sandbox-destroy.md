@@ -3,7 +3,7 @@ description: Destroy the AWS EC2 sandbox instance
 agent: build
 ---
 
-You are tasked with destroying an existing AWS EC2 sandbox instance managed by Terraform.
+You are tasked with destroying an existing AWS EC2 sandbox instance. You will first attempt to use local Terraform state, and if that is missing, you will offer an "Aggressive Discovery" mode to find and clean up orphaned AWS resources.
 
 ## Step 1: Get Working Directory
 
@@ -13,93 +13,74 @@ Capture the current working directory where the command was invoked:
 
 Store this directory path and use it for all subsequent operations. All file operations must happen in this directory.
 
-## Step 2: Check if Sandbox Exists
+## Step 2: Check for Local Sandbox State
 
-Verify that a sandbox exists in the working directory. Use the bash tool with `workdir` parameter set to the working directory:
+Verify if a sandbox exists in the working directory:
 
 !`test -d .sandbox && test -f .sandbox/terraform.tfstate && echo "EXISTS" || echo "NONE"`
 
-If the output is "NONE", inform the user that no sandbox exists and stop execution.
+### Case A: Local Sandbox Exists
 
-## Step 3: Display Current Sandbox Info
+If the output is "EXISTS", proceed with standard Terraform destruction:
 
-If a sandbox exists, read and display its current information from `<working_directory>/.sandbox/output.json`.
+1. **Display Current Sandbox Info**:
+   !`test -f .sandbox/output.json && cat .sandbox/output.json || echo "{}"`
+   Show the user: Instance ID, Instance Type, Region, Created At, Shutdown Time.
 
-Use the Read tool with `filePath` set to `<working_directory>/.sandbox/output.json`, or use bash with workdir parameter:
+2. **Confirm Destruction**: Inform the user that you're about to destroy the sandbox instance and that this action cannot be undone.
 
-!`test -f .sandbox/output.json && cat .sandbox/output.json || echo "{}"`
+3. **Run Terraform Destroy**: Execute with auto-approve in `.sandbox/` directory.
+   !`terraform destroy -auto-approve`
 
-Show the user:
-- Instance ID
-- Instance Type
-- Region
-- Created At
-- Shutdown Time
+4. **Wait for Instance Termination**:
+   !`INSTANCE_ID=$(terraform output -raw instance_id 2>/dev/null || echo ""); if [ ! -z "$INSTANCE_ID" ]; then AWS_REGION=$(terraform output -raw region 2>/dev/null || echo "us-west-2"); echo "⏳ Waiting for instance $INSTANCE_ID to terminate..."; aws ec2 wait instance-terminated --instance-ids $INSTANCE_ID --region $AWS_REGION && echo "✅ Instance $INSTANCE_ID has been terminated"; fi`
 
-## Step 4: Confirm Destruction
+5. **Clean Up Files**: Ask the user if they want to remove the `.sandbox/` directory. If yes: `rm -rf .sandbox`.
 
-Inform the user that you're about to destroy the sandbox instance and that this action cannot be undone.
+6. **Update AGENTS.md**: If `.sandbox/` was removed, remove or comment out the "EC2 Sandbox" section in `AGENTS.md`.
 
-## Step 5: Run Terraform Destroy
+### Case B: No Local State Found (Aggressive Discovery)
 
-Execute Terraform destroy with auto-approve and wait for completion. Use the bash tool with `workdir` parameter set to `<working_directory>/.sandbox`:
+If the output is "NONE", inform the user that no local sandbox state was found. Ask:
+> "No local sandbox state found. Would you like to search AWS for orphaned 'ghost' resources tagged for this project?"
 
-!`terraform destroy -auto-approve`
+If the user says yes:
 
-## Step 6: Wait for Instance Termination
+1. **Discovery**: Search for resources tagged with `ManagedBy=opencode-terraform` and `Project=<current_dir_basename>`.
+   Run these discovery commands:
+   ```bash
+   PROJECT_NAME=$(basename $(pwd))
+   # Instances
+   aws ec2 describe-instances --filters "Name=tag:ManagedBy,Values=opencode-terraform" "Name=tag:Project,Values=$PROJECT_NAME" "Name=instance-state-name,Values=pending,running,stopping,stopped" --query "Reservations[].Instances[].{ID:InstanceId,Type:InstanceType,State:State.Name}" --output table
+   # Security Groups
+   aws ec2 describe-security-groups --filters "Name=tag:ManagedBy,Values=opencode-terraform" "Name=tag:Project,Values=$PROJECT_NAME" --query "SecurityGroups[].{ID:GroupId,Name:GroupName}" --output table
+   # IAM Roles
+   aws iam list-roles --query "Roles[?contains(RoleName, 'opencode-sandbox')].RoleName" --output text # Filter further in your logic
+   ```
 
-After Terraform completes, wait for the instance to fully terminate to ensure cleanup is complete.
+2. **Present and Confirm**: List all found IDs/Names to the user and ask: "Are you sure you want to permanently destroy these AWS resources?"
 
-Get the instance ID and region from terraform outputs, then wait for termination. Use the bash tool with `workdir` parameter set to `<working_directory>/.sandbox`:
+3. **Manual Cleanup Sequence**:
+   If confirmed, execute cleanup in this order (handling errors gracefully):
+   - **Instances**: `aws ec2 terminate-instances --instance-ids <IDS>`
+   - **Wait**: `aws ec2 wait instance-terminated --instance-ids <IDS>` (Crucial for SG cleanup)
+   - **IAM Instance Profiles**: Find, detach roles, and delete.
+     `aws iam list-instance-profiles --query "InstanceProfiles[?contains(InstanceProfileName, 'opencode-sandbox')].InstanceProfileName"`
+   - **IAM Roles**: Detach policies and delete.
+   - **Security Groups**: `aws ec2 delete-security-group --group-id <ID>`
 
-!`INSTANCE_ID=$(terraform output -raw instance_id 2>/dev/null || echo ""); if [ ! -z "$INSTANCE_ID" ]; then AWS_REGION=$(terraform output -raw region 2>/dev/null || echo "us-west-2"); echo "⏳ Waiting for instance $INSTANCE_ID to terminate..."; aws ec2 wait instance-terminated --instance-ids $INSTANCE_ID --region $AWS_REGION && echo "✅ Instance $INSTANCE_ID has been terminated"; fi`
+4. **Validate**: Run the discovery commands again to ensure "No resources found".
 
-## Step 7: Clean Up Files (Optional)
+## Step 3: Display Success Message
 
-Ask the user if they want to remove the entire `.sandbox/` directory from the working directory. Explain that this will delete:
-- All Terraform configuration files
-- Terraform state files
-- Output JSON file
+Show a success message confirming the cleanup.
 
-If they choose yes, use the bash tool with `workdir` parameter set to the working directory:
-
-!`rm -rf .sandbox`
-
-If they choose no, just leave the files in place. They may want to inspect the Terraform state or keep the configuration for future use.
-
-## Step 8: Update AGENTS.md (if .sandbox was removed)
-
-If the `.sandbox/` directory was removed, update `AGENTS.md` in the working directory to remove or comment out the EC2 Sandbox section.
-
-Use the Read tool to check if `<working_directory>/AGENTS.md` exists and contains an "EC2 Sandbox" section. If it does, you can either:
-1. Remove the entire section using the Edit tool
-2. Add a note that the sandbox has been destroyed
-
-Use the Edit tool with `filePath` set to `<working_directory>/AGENTS.md`.
-
-## Step 9: Display Success Message
-
-Show a success message confirming the sandbox has been destroyed.
-
-Example format:
 ```
-✅ EC2 Sandbox destroyed successfully!
-
-The sandbox instance has been terminated and all AWS resources have been cleaned up.
-
-.sandbox/ directory: [kept/removed based on user choice]
+✅ Sandbox resources destroyed successfully!
 ```
 
 ## Error Handling
 
-- If Terraform destroy fails, show the error and suggest manual cleanup via AWS Console
-- If the instance termination wait fails, inform the user but note that Terraform has already issued the termination command
-- Preserve error messages for debugging
-
-## Important Notes
-
-- **Working Directory**: Capture the working directory at the start (Step 1) and use it consistently throughout
-- **Bash Tool Usage**: Use the `workdir` parameter for all bash commands to ensure they execute in the correct location
-- **File Paths**: Use absolute paths constructed from `<working_directory>` for all Read and Edit tool operations
-- **Critical**: The `rm -rf .sandbox` command in Step 7 must use the workdir parameter to ensure the correct directory is deleted
-- **Critical**: Never use relative paths with `cd` commands - always use the `workdir` parameter instead
+- If Terraform destroy fails, suggest manual cleanup using the Aggressive Discovery mode or AWS Console.
+- If AWS CLI commands fail (e.g., dependency violation), inform the user and suggest they check for remaining resources.
+- Always use the `workdir` parameter for bash commands.

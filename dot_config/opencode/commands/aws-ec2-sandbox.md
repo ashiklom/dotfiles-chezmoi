@@ -169,6 +169,7 @@ resource "aws_security_group" "sandbox" {
   tags = {
     Name      = "opencode-sandbox-sg"
     ManagedBy = "opencode-terraform"
+    Project   = basename(abspath(path.root))
   }
 }
 
@@ -192,6 +193,7 @@ resource "aws_iam_role" "sandbox" {
   tags = {
     Name      = "opencode-sandbox-role"
     ManagedBy = "opencode-terraform"
+    Project   = basename(abspath(path.root))
   }
 }
 
@@ -242,6 +244,7 @@ resource "aws_iam_instance_profile" "sandbox" {
   tags = {
     Name      = "opencode-sandbox-profile"
     ManagedBy = "opencode-terraform"
+    Project   = basename(abspath(path.root))
   }
 }
 
