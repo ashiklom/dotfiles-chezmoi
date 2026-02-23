@@ -46,30 +46,42 @@ If the output is "NONE", inform the user that no local sandbox state was found. 
 
 If the user says yes:
 
-1. **Discovery**: Search for resources tagged with `ManagedBy=opencode-terraform` and `Project=<current_dir_basename>`.
-   Run these discovery commands:
-   ```bash
-   PROJECT_NAME=$(basename $(pwd))
-   # Instances
-   aws ec2 describe-instances --filters "Name=tag:ManagedBy,Values=opencode-terraform" "Name=tag:Project,Values=$PROJECT_NAME" "Name=instance-state-name,Values=pending,running,stopping,stopped" --query "Reservations[].Instances[].{ID:InstanceId,Type:InstanceType,State:State.Name}" --output table
-   # Security Groups
-   aws ec2 describe-security-groups --filters "Name=tag:ManagedBy,Values=opencode-terraform" "Name=tag:Project,Values=$PROJECT_NAME" --query "SecurityGroups[].{ID:GroupId,Name:GroupName}" --output table
-   # IAM Roles
-   aws iam list-roles --query "Roles[?contains(RoleName, 'opencode-sandbox')].RoleName" --output text # Filter further in your logic
+1. **Select Search Scope**: Prompt the user to choose the search region(s):
+   - **Configured Region**: Only search the region currently configured in AWS CLI/Environment (e.g., `us-west-2`).
+   - **All US Regions (Default)**: Search `us-east-1`, `us-east-2`, `us-west-1`, `us-west-2`.
+   - **All Active Regions**: Search every region enabled in the AWS account.
+   - **Custom**: User provides a specific region or comma-separated list.
+
+2. **Discovery Loop**: 
+   Iterate through the selected regions. For each region, search for:
+   - **Instances**: `aws ec2 describe-instances --region <REGION> --filters "Name=tag:ManagedBy,Values=opencode-terraform" "Name=tag:Project,Values=<PROJECT_NAME>" "Name=instance-state-name,Values=pending,running,stopping,stopped"`
+   - **Security Groups**: `aws ec2 describe-security-groups --region <REGION> --filters "Name=tag:ManagedBy,Values=opencode-terraform" "Name=tag:Project,Values=<PROJECT_NAME>"`
+
+   After regional checks, perform one global check for:
+   - **IAM Roles**: Search for roles with names containing `opencode-sandbox` and the `Project` tag.
+   - **IAM Instance Profiles**: Search for profiles with names containing `opencode-sandbox` and the `Project` tag.
+
+3. **Present and Confirm**: Group findings by region and resource type. 
+   Example:
    ```
+   Found in us-west-2:
+   - EC2 Instance: i-0abc123... (running)
+   - Security Group: sg-0def456...
+   
+   Found in Global (IAM):
+   - Role: opencode-sandbox-role-abc...
+   ```
+   Ask: "Are you sure you want to permanently destroy these AWS resources?"
 
-2. **Present and Confirm**: List all found IDs/Names to the user and ask: "Are you sure you want to permanently destroy these AWS resources?"
+4. **Manual Cleanup Sequence**:
+   Execute cleanup in this order, being careful to pass the correct `--region` for regional resources:
+   - **Terminate Instances**: `aws ec2 terminate-instances --region <REGION> --instance-ids <IDS>`
+   - **Wait**: `aws ec2 wait instance-terminated --region <REGION> --instance-ids <IDS>` (Crucial for SG cleanup)
+   - **Delete IAM Instance Profiles**: Remove roles first, then delete.
+   - **Delete IAM Roles**: Detach all attached policies first, then delete.
+   - **Delete Security Groups**: `aws ec2 delete-security-group --region <REGION> --group-id <ID>`
 
-3. **Manual Cleanup Sequence**:
-   If confirmed, execute cleanup in this order (handling errors gracefully):
-   - **Instances**: `aws ec2 terminate-instances --instance-ids <IDS>`
-   - **Wait**: `aws ec2 wait instance-terminated --instance-ids <IDS>` (Crucial for SG cleanup)
-   - **IAM Instance Profiles**: Find, detach roles, and delete.
-     `aws iam list-instance-profiles --query "InstanceProfiles[?contains(InstanceProfileName, 'opencode-sandbox')].InstanceProfileName"`
-   - **IAM Roles**: Detach policies and delete.
-   - **Security Groups**: `aws ec2 delete-security-group --group-id <ID>`
-
-4. **Validate**: Run the discovery commands again to ensure "No resources found".
+5. **Validate**: Re-run discovery across the same regions to ensure "No resources found".
 
 ## Step 3: Display Success Message
 
