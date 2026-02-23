@@ -111,7 +111,7 @@ data "aws_ami" "amazon_linux_2023" {
   
   filter {
     name   = "name"
-    values = ["al2023-ami-*-x86_64"]
+    values = ["al2023-ami-2023*-x86_64"]
   }
   
   filter {
@@ -247,11 +247,12 @@ resource "aws_iam_instance_profile" "sandbox" {
 
 # EC2 Instance
 resource "aws_instance" "sandbox" {
-  ami                    = data.aws_ami.amazon_linux_2023.id
-  instance_type          = local.instance_type
-  subnet_id              = data.aws_subnet.default.id
-  vpc_security_group_ids = [aws_security_group.sandbox.id]
-  iam_instance_profile   = aws_iam_instance_profile.sandbox.name
+  ami                         = data.aws_ami.amazon_linux_2023.id
+  instance_type               = local.instance_type
+  subnet_id                   = data.aws_subnet.default.id
+  vpc_security_group_ids      = [aws_security_group.sandbox.id]
+  iam_instance_profile        = aws_iam_instance_profile.sandbox.name
+  associate_public_ip_address = true
   
   # Root block device configuration
   root_block_device {
