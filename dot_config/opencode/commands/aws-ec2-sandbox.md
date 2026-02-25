@@ -111,7 +111,7 @@ data "aws_ami" "amazon_linux_2023" {
   
   filter {
     name   = "name"
-    values = ["al2023-ami-2023*-x86_64"]
+    values = ["al2023-ami-20*.*-x86_64"]
   }
   
   filter {
@@ -124,10 +124,11 @@ data "aws_ami" "amazon_linux_2023" {
 ### main.tf
 ```hcl
 terraform {
+  required_version = ">= 1.5.0"
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.0"
+      version = "~> 6.0"
     }
   }
 }
@@ -257,6 +258,10 @@ resource "aws_instance" "sandbox" {
   iam_instance_profile        = aws_iam_instance_profile.sandbox.name
   associate_public_ip_address = true
   
+  metadata_options {
+    http_tokens = "required"
+  }
+
   # Root block device configuration
   root_block_device {
     volume_size           = var.root_volume_size_gb
