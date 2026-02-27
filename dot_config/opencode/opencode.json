@@ -1,0 +1,13 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "autoupdate": true,
+  "permission": {
+    "bash": {
+      "pip install *": "deny",
+      "brew *": "deny",
+      "git push *": "ask",
+      "rm *": "ask",
+      "Rscript *": "ask"
+    }
+  }
+}
