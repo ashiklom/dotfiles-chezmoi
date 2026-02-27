@@ -38,6 +38,10 @@ if [ -d "$HOME/.opencode/bin" ]; then
   PATH="$HOME/.opencode/bin":$PATH
 fi
 
+if [ -d "$HOME/.bun/bin" ]; then
+  PATH=$PATH:$HOME/.bun/bin
+fi
+
 export PATH
 
 # vim: set filetype=sh :
