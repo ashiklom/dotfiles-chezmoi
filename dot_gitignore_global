@@ -1,0 +1,3 @@
+*.otter.R
+*.otter.yml
+.DS_Store
