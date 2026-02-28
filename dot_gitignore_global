@@ -1,3 +1,4 @@
+__pycache__/
 *.otter.R
 *.otter.yml
 .DS_Store
