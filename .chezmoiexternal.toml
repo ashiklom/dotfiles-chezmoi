@@ -41,10 +41,7 @@ refreshPeriod = "672h"
 include = ["*/skills/pdf/**"]
 stripComponents = 3
 
-[".config/gitui/"]
-type = "archive"
-url = "https://github.com/catppuccin/gitui/archive/main.tar.gz"
-exact = true
-refreshPeriod = "24h"
-include = ["*/themes/*"]
-stripComponents = 2
+[".config/gitui/theme.ron"]
+type = "file"
+url = "https://raw.githubusercontent.com/catppuccin/gitui/refs/heads/main/themes/catppuccin-mocha.ron"
+refreshPeriod = "672h"
