@@ -9,5 +9,6 @@
       "rm *": "ask",
       "Rscript *": "ask"
     }
-  }
+  },
+  "plugin": ["@tarquinen/opencode-dcp@latest"]
 }
