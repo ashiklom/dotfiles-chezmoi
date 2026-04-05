@@ -2,3 +2,6 @@ __pycache__/
 *.otter.R
 *.otter.yml
 .DS_Store
+
+# Temporary files created by R-nvim
+*.tmp.R
