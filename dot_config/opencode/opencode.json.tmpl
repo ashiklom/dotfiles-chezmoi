@@ -4,19 +4,19 @@
   {{- if .is_nasa }}
   "provider": {
     "nasa_litellm": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "NASA LiteLLM",
-      "options": {"baseURL": "https://llm-api-access.caio.mcp.nasa.gov"},
+      "npm": "@ai-sdk/openai",
+      "name": "NMC LiteLLM",
+      "options": {"baseURL": "https://proxy.fast.luna.nasa.gov"},
       "models": {
         "gemini-3.1-flash-lite-preview": {"name": "Gemini 3.1 Flash Lite (Preview)"},
         "gemini-3.1-pro-preview": {"name": "Gemini 3.1 Pro (Preview)"},
         "gpt-5.2": {"name": "GPT 5.2"},
-        "claude-4.6-sonnet": {"name": "Claude 4.6 Sonnet"},
-        "claude-4.6-sonnet-thinking": {"name": "Claude 4.6 Sonnet (thinking)"},
-        "claude-4.6-opus": {"name": "Claude 4.6 Opus"},
-        "claude-4.6-opus-thinking": {"name": "Claude 4.6 Opus (thinking)"},
-        "claude-4.5-haiku": {"name": "Claude 4.5 Haiku"},
-        "claude-3.5-haiku": {"name": "Claude 3.5 Haiku"},
+        "claude-sonnet-4.6": {"name": "Claude 4.6 Sonnet"},
+        "claude-sonnet-4.6-thinking": {"name": "Claude 4.6 Sonnet (thinking)"},
+        "claude-opus-4.6": {"name": "Claude 4.6 Opus"},
+        "claude-opus-4.6-thinking": {"name": "Claude 4.6 Opus (thinking)"},
+        "claude-haiku-4.5": {"name": "Claude 4.5 Haiku"},
+        "claude-haiku-3.5": {"name": "Claude 3.5 Haiku"}
       }
     }
   },
