@@ -15,7 +15,16 @@ config.cursor_blink_rate = 600
 
 config.adjust_window_size_when_changing_font_size = false
 
+config.leader = {
+  key = "X", mods = "CTRL|SHIFT", timeout_milliseconds = 1000
+}
+
 config.keys = {
+  {
+    key = "X",
+    mods = "CTRL|SHIFT",
+    action = act.DisableDefaultAssignment
+  },
   {
     key = "{",
     mods = "CTRL|SHIFT",
@@ -27,13 +36,13 @@ config.keys = {
     action = act.ActivateTabRelative(1)
   },
   {
-    key = "d",
-    mods = "CTRL|SHIFT",
+    key = "\\",
+    mods = "LEADER",
     action = act.SplitHorizontal {domain = "CurrentPaneDomain"}
   },
   {
-    key = "s",
-    mods = "CTRL|SHIFT",
+    key = "-",
+    mods = "LEADER",
     action = act.SplitVertical {domain = "CurrentPaneDomain"}
   },
   -- Resize by 5 cells at a time
@@ -67,10 +76,20 @@ config.keys = {
     mods = "CTRL|SHIFT",
     action = act.PaneSelect { mode = "SwapWithActive" }
   },
+  {
+    key = 'e',
+    mods = 'LEADER',
+    action = act.EmitEvent 'trigger-vim-with-scrollback',
+  },
+  {
+    key = 'Enter',
+    mods = 'LEADER',
+    action = act.ActivateCopyMode,
+  }
 }
 
 -- Disable mouse bindings
-config.disable_default_mouse_bindings = true
+-- config.disable_default_mouse_bindings = true
 
 local io = require 'io'
 local os = require 'os'
@@ -111,8 +130,14 @@ end)
 
 table.insert(config.keys, {
   key = 'E',
-  mods = 'CTRL|SHIFT',
+  mods = 'LEADER',
   action = act.EmitEvent 'trigger-vim-with-scrollback',
+})
+
+table.insert(config.keys, {
+  key = 'Enter',
+  mods = 'LEADER',
+  action = act.ActivateCopyMode,
 })
 
 return config
