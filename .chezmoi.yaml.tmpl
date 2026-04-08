@@ -28,5 +28,11 @@ data:
     mauve_hex: "#cba6f7"
     comment_hex: "#6c7086"
 
+{{- if lookPath "nvim" }}
+merge:
+  command: "nvim"
+  args: ["-d"]
+{{ end }}
+
 
 # vim: filetype=yaml :
