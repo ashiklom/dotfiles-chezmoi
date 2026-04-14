@@ -108,7 +108,7 @@ fi
 {{- if and (.is_macos) (stat (joinPath .chezmoi.homeDir "Applications/WezTerm.app/Contents/MacOS")) }}
 WEZTERM_DIR="$HOME/Applications/WezTerm.app/Contents/MacOS"
 if [[ -d $WEZTERM_DIR ]]; then
-  path=($WEZTERM_DIR $path)
+  path=($path $WEZTERM_DIR)
 fi
 {{- end }}
 
