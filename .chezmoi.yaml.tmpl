@@ -1,7 +1,6 @@
 sourceDir: {{ .chezmoi.sourceDir }}
 
 data:
-  ostype: {{ .chezmoi.os | quote }}
 
   is_macos: {{ eq .chezmoi.os "darwin" }}
   is_linux: {{ eq .chezmoi.os "linux" }}
@@ -30,7 +29,7 @@ data:
 
 {{- if lookPath "nvim" }}
 merge:
-  command: "nvim"
+  command: "{{ lookPath "nvim" }}"
   args: ["-d"]
 {{ end }}
 

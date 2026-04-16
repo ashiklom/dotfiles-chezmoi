@@ -2,18 +2,10 @@
 	excludesfile = ~/.gitignore_global
 [credential "https://github.com"]
 	helper = 
-{{- if .is_macos }}
-	helper = !/opt/homebrew/bin/gh auth git-credential
-{{- else }}
-	helper = !/usr/bin/gh auth git-credential
-{{- end}}
+	helper = !{{ lookPath "gh" }} auth git-credential
 [credential "https://gist.github.com"]
 	helper = 
-{{- if .is_macos }}
-	helper = !/opt/homebrew/bin/gh auth git-credential
-{{- else }}
-	helper = !/usr/bin/gh auth git-credential
-{{- end}}
+	helper = !{{ lookPath "gh" }} auth git-credential
 [user]
 	name = Alexey Shiklomanov
 {{- if .is_nasa }}
