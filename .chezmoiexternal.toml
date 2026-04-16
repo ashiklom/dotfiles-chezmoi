@@ -30,7 +30,7 @@ type = "archive"
 url = "https://github.com/shiklomanov-an/xarray-skill/archive/main.tar.gz"
 exact = true
 refreshPeriod = "24h"
-include = ["*/xarray-skill/**"]
+include = ["*/python-xarray/**"]
 stripComponents = 2
 
 [".agents/skills/sliderule-skill"]
@@ -38,7 +38,7 @@ type = "archive"
 url = "https://github.com/shiklomanov-an/sliderule-skill/archive/main.tar.gz"
 exact = true
 refreshPeriod = "24h"
-include = ["*/sliderule-skill/**"]
+include = ["*/sliderule/**"]
 stripComponents = 2
 
 [".agents/skills/pdf"]
