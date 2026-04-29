@@ -7,10 +7,14 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 [ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
 
 if [ -d "$HOME/.pixi/bin" ]; then
-  PATH=$PATH:"$HOME/.pixi/bin"
+  PATH="$PATH:$HOME/.pixi/bin"
 fi
 
 [ -f "$HOME/.cargo/env" ] && \. "$HOME/.cargo/env"
+
+if [ -d "$HOME/.cargo/bin" ]; then
+  PATH="$PATH:$HOME/.cargo/bin"
+fi
 
 # >>> juliaup initialize >>>
 
