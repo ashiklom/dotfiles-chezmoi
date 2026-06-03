@@ -16,12 +16,20 @@ config.cursor_blink_rate = 600
 config.adjust_window_size_when_changing_font_size = false
 
 config.leader = {
+{{- if .is_macos }}
+  key = "X", mods = "CTRL|SHIFT", timeout_milliseconds = 1000
+{{- else }}
   key = "phys:x", mods = "CTRL|SHIFT", timeout_milliseconds = 1000
+{{- end}}
 }
 
 config.keys = {
   {
+{{- if .is_macos }}
+    key = "X",
+{{- else }}
     key = "phys:x",
+{{- end }}
     mods = "CTRL|SHIFT",
     action = act.DisableDefaultAssignment
   },
