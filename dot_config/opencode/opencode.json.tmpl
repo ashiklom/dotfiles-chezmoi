@@ -8,15 +8,48 @@
       "name": "NMC LiteLLM",
       "options": {"baseURL": "https://proxy.fast.luna.nasa.gov"},
       "models": {
-        "gemini-3.1-flash-lite-preview": {"name": "Gemini 3.1 Flash Lite (Preview)"},
-        "gemini-3.1-pro-preview": {"name": "Gemini 3.1 Pro (Preview)"},
-        "gpt-5.2": {"name": "GPT 5.2"},
-        "claude-sonnet-4.6": {"name": "Claude 4.6 Sonnet"},
-        "claude-sonnet-4.6-thinking": {"name": "Claude 4.6 Sonnet (thinking)"},
+        "claude-3.5-haiku": {"name": "Claude 3.5 Haiku"},
+        "claude-4.5-haiku": {"name": "Claude 4.5 Haiku"},
+        "claude-opus-4.5": {"name": "Claude 4.5 Opus"},
+        "claude-opus-4.5-thinking": {"name": "Claude 4.5 Opus (thinking)"},
         "claude-opus-4.6": {"name": "Claude 4.6 Opus"},
         "claude-opus-4.6-thinking": {"name": "Claude 4.6 Opus (thinking)"},
-        "claude-haiku-4.5": {"name": "Claude 4.5 Haiku"},
-        "claude-haiku-3.5": {"name": "Claude 3.5 Haiku"}
+        "claude-opus-4.7": {"name": "Claude 4.7 Opus"},
+        "claude-opus-4.7-thinking": {"name": "Claude 4.7 Opus (thinking)"},
+        "claude-opus-4.8": {"name": "Claude 4.8 Opus"},
+        "claude-opus-4.8-thinking": {"name": "Claude 4.8 Opus (thinking)"},
+        "claude-sonnet-4.5": {"name": "Claude 4.5 Sonnet"},
+        "claude-sonnet-4.5-thinking": {"name": "Claude 4.5 Sonnet (thinking)"},
+        "claude-sonnet-4.6": {"name": "Claude 4.6 Sonnet"},
+        "claude-sonnet-4.6-thinking": {"name": "Claude 4.6 Sonnet (thinking)"},
+        "gemini-2.5-flash": {"name": "Gemini 2.5 Flash"},
+        "gemini-2.5-flash-image": {"name": "Gemini 2.5 Flash Image"},
+        "gemini-2.5-flash-lite": {"name": "Gemini 2.5 Flash Lite"},
+        "gemini-2.5-pro": {"name": "Gemini 2.5 Pro"},
+        "gemini-3-flash-preview": {"name": "Gemini 3 Flash (Preview)"},
+        "gemini-3-pro-image-preview": {"name": "Gemini 3 Pro Image (Preview)"},
+        "gemini-3.1-flash-image-preview": {"name": "Gemini 3.1 Flash Image (Preview)"},
+        "gemini-3.1-flash-lite-preview": {"name": "Gemini 3.1 Flash Lite (Preview)"},
+        "gemini-3.1-pro-preview": {"name": "Gemini 3.1 Pro (Preview)"},
+        "gemini-3.5-flash": {"name": "Gemini 3.5 Flash"},
+        "gpt-4.1": {"name": "GPT 4.1"},
+        "gpt-4.1-mini": {"name": "GPT 4.1 Mini"},
+        "gpt-4.1-nano": {"name": "GPT 4.1 Nano"},
+        "gpt-4o": {"name": "GPT 4o"},
+        "gpt-4o-mini": {"name": "GPT 4o Mini"},
+        "gpt-5": {"name": "GPT 5"},
+        "gpt-5-mini": {"name": "GPT 5 Mini"},
+        "gpt-5.1": {"name": "GPT 5.1"},
+        "gpt-5.2": {"name": "GPT 5.2"},
+        "gpt-5.3-codex": {"name": "GPT 5.3 Codex"},
+        "gpt-5.4": {"name": "GPT 5.4"},
+        "gpt-5.4-nano": {"name": "GPT 5.4 Nano"},
+        "gpt-5.5": {"name": "GPT 5.5"},
+        "o1": {"name": "o1"},
+        "o3-mini": {"name": "o3 Mini"},
+        "o4-mini": {"name": "o4 Mini"},
+        "text-embedding-3-large": {"name": "Text Embedding 3 Large"},
+        "text-embedding-ada-002": {"name": "Text Embedding Ada 002"}
       }
     }
   },
@@ -29,5 +62,17 @@
       "rm *": "ask"
     }
   },
-  "plugin": ["@tarquinen/opencode-dcp@latest"]
+  "plugin": [
+    "@tarquinen/opencode-dcp@latest",
+    "opencode-pty",
+    "@slkiser/opencode-quota"
+  ],
+  "experimental": {
+    "quotaToast": {
+      "enableToast": false,
+      "showSessionTokens": true,
+      "enabledProviders": "auto",
+      "formatStyle": "classic"
+    }
+  }
 }
