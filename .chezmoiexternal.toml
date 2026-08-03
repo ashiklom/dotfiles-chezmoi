@@ -11,7 +11,7 @@ stripComponents = 3
 
 [".agents/skills/virtual-zarr"]
 type = "archive"
-url = "https://github.com/shiklomanov-an/virtual-zarr-skill/archive/main.tar.gz"
+url = "https://github.com/ashiklom/virtual-zarr-skill/archive/main.tar.gz"
 exact = true
 refreshPeriod = "24h"
 include = ["*/virtual-zarr/**"]
@@ -27,7 +27,7 @@ stripComponents = 2
 
 [".agents/skills/xarray-skill"]
 type = "archive"
-url = "https://github.com/shiklomanov-an/xarray-skill/archive/main.tar.gz"
+url = "https://github.com/ashiklom/xarray-skill/archive/main.tar.gz"
 exact = true
 refreshPeriod = "24h"
 include = ["*/python-xarray/**"]
@@ -35,7 +35,7 @@ stripComponents = 2
 
 [".agents/skills/sliderule-skill"]
 type = "archive"
-url = "https://github.com/shiklomanov-an/sliderule-skill/archive/main.tar.gz"
+url = "https://github.com/ashiklom/sliderule-skill/archive/main.tar.gz"
 exact = true
 refreshPeriod = "24h"
 include = ["*/sliderule/**"]
