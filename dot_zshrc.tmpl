@@ -87,9 +87,8 @@ if [[ -f "$HOME/.fzf.zsh" ]]; then
   source "$HOME/.fzf.zsh"
 fi
 
-NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# nvm
+export NVM_LAZY_LOAD=true
 
 MY_SPACKDIR="$HOME/projects/src/spack"
 if [ -f "$MY_SPACKDIR/share/spack/setup-env.sh" ]; then
