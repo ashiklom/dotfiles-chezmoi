@@ -6,26 +6,24 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 
 [ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
 
-if [ -d "$HOME/.pixi/bin" ]; then
-  PATH="$PATH:$HOME/.pixi/bin"
-fi
-
 [ -f "$HOME/.cargo/env" ] && \. "$HOME/.cargo/env"
 
-# >>> juliaup initialize >>>
+# Add a directory to PATH if the directory exists and is not already in PATH
+_addpath() {
+  local hdir="$1"
+  [[ ! -d "$hdir" ]] && return 0
+  case ":$PATH:" in
+    *":$hdir:"*) ;;
+    *) PATH="$hdir${PATH:+:${PATH}}" ;;
+  esac
+  return 0
+}
 
-# !! Contents within this block are managed by juliaup !!
-
-case ":$PATH:" in
-    *:/Users/ashiklom/.juliaup/bin:*)
-        ;;
-
-    *)
-        PATH=/Users/ashiklom/.juliaup/bin${PATH:+:${PATH}}
-        ;;
-esac
-
-# <<< juliaup initialize <<<
+_addpath "{{ .chezmoi.homeDir }}/.juliaup/bin"
+_addpath "{{ .chezmoi.homeDir }}/.local/bin"
+_addpath "{{ .chezmoi.homeDir }}/.opencode/bin"
+_addpath "{{ .chezmoi.homeDir }}/.bun/bin"
+_addpath "{{ .chezmoi.homeDir }}/.pixi/bin"
 
 if command -v nvim > /dev/null; then
   export EDITOR=nvim
@@ -34,14 +32,8 @@ else
   export EDITOR=vim
 fi
 
-if [ -d "$HOME/.opencode/bin" ]; then
-  PATH=$PATH:"$HOME/.opencode/bin"
-fi
-
-if [ -d "$HOME/.bun/bin" ]; then
-  PATH=$PATH:"$HOME/.bun/bin"
-fi
-
 export PATH
+
+unset -f _addpath
 
 # vim: set filetype=sh :
