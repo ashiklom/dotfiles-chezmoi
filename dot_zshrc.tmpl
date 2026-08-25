@@ -100,7 +100,9 @@ if command -v tv &> /dev/null; then
 fi
 
 # Completions for AWS SSO
+# To install, run `aws-sso setup completions --source > $HOME/.local/share/aws_sso_comp
 if [[ -f "$HOME/.local/share/aws_sso_comp" ]]; then
+  autoload -Uz +X bashcompinit && bashcompinit
   source "$HOME/.local/share/aws_sso_comp"
 fi
 
