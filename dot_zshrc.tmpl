@@ -106,11 +106,14 @@ if [[ -f "$HOME/.local/share/aws_sso_comp" ]]; then
   source "$HOME/.local/share/aws_sso_comp"
 fi
 
-{{- if and (.is_macos) (stat (joinPath .chezmoi.homeDir "Applications/WezTerm.app/Contents/MacOS")) }}
-WEZTERM_DIR="$HOME/Applications/WezTerm.app/Contents/MacOS"
-if [[ -d $WEZTERM_DIR ]]; then
-  path=($path $WEZTERM_DIR)
-fi
+{{- if .is_macos -}}
+{{- $userApp := joinPath .chezmoi.homeDir "Applications/WezTerm.app/Contents/MacOS" -}}
+{{- $sysApp  := "/Applications/WezTerm.app/Contents/MacOS" -}}
+{{- $dir     := ternary $userApp $sysApp (not (empty (stat $userApp))) -}}
+{{- if stat $dir }}
+WEZTERM_DIR="{{ $dir }}"
+path+=("$WEZTERM_DIR")
+{{- end }}
 {{- end }}
 
 [ -f "$HOME/.bash_aliases" ] && \. "$HOME/.bash_aliases"
