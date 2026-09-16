@@ -27,6 +27,13 @@ local function send_selection()
   send_code_to_repl(code)
 end
 
+local function goto_expression(dir)
+  local pos = api.next_expr_boundary({ direction = dir, boundary = "start" })
+  if pos then
+    vim.fn.cursor(pos:to_cursor())
+  end
+end
+
 local function send_expression()
   local expr = api.get_expr()
   if not expr then
@@ -61,6 +68,14 @@ vim.keymap.set(
 
 vim.keymap.set("n", "<localleader>l", send_expression, { desc = "Send current expression to R" })
 vim.keymap.set("x", "<localleader>ss", send_selection, { desc = "Send visual selection to R" })
+vim.keymap.set("n", "<localleader>d", function()
+  send_expression()
+  goto_expression(1)
+end, { desc = "Send expression and goto next"})
+
+vim.keymap.set("n", "]e", function() goto_expression(1) end, { desc = "Next expression" })
+vim.keymap.set("n", "[e", function() goto_expression(-1) end, { desc = "Previous expression" })
+
 vim.keymap.set("n", "<localleader>rp", function() call_fn_on_cword("print") end, { desc = "Print object under cursor", buffer = 0 })
 vim.keymap.set("n", "<localleader>rg", function() call_fn_on_cword("dplyr::glimpse") end, { desc = "dplyr::glimpse object under cursor", buffer = 0 })
 vim.keymap.set("n", "<localleader>rn", function() call_fn_on_cword("names") end, { desc = "`names` of object under cursor", buffer = 0 })
