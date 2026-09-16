@@ -57,6 +57,7 @@ end
 
 vim.pack.add({
   -- "https://github.com/folke/which-key.nvim",
+  'https://github.com/nvim-mini/mini.bufremove',
   'https://github.com/nvim-mini/mini.icons',
   'https://github.com/stevearc/oil.nvim',
   --
@@ -64,6 +65,7 @@ vim.pack.add({
 })
 
 require('mini.icons').setup()
+require('mini.bufremove').setup()
 
 require('oil').setup({
   buf_options = {
@@ -113,25 +115,12 @@ vim.api.nvim_create_autocmd("FileType", {
     "qf",
     "checkhealth",
     "grug-far",
-    "nvim-pack"
+    "nvim-pack",
+    "oil"
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
     vim.keymap.set("n", "q", "<cmd>close<cr>", {
-      buffer = event.buf,
-      silent = true,
-      desc = "Quit buffer"
-    })
-  end
-})
-
-vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup('bufdelete_with_q', { clear = true }),
-  pattern = {
-    "oil"
-  },
-  callback = function(event)
-    vim.keymap.set("n", "q", function() MiniBufremove.delete() end, {
       buffer = event.buf,
       silent = true,
       desc = "Quit buffer"

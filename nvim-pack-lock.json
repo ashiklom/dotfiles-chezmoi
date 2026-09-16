@@ -41,6 +41,10 @@
       "rev": "cb02c5444613475b7edf0c8dc98264c1c857aa6e",
       "src": "https://github.com/nvim-mini/mini.ai"
     },
+    "mini.bufremove": {
+      "rev": "281bb1a2c60c3618c854bef2c0933276eb2362c2",
+      "src": "https://github.com/nvim-mini/mini.bufremove"
+    },
     "mini.cmdline": {
       "rev": "3dcca5e11c819718d250f9a3a61605698ea1f756",
       "src": "https://github.com/nvim-mini/mini.cmdline"
