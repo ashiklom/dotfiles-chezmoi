@@ -1,11 +1,6 @@
 vim.pack.add({
-  'https://codeberg.org/andyg/leap.nvim',
-  'https://github.com/nvim-mini/mini.ai',
-  'https://github.com/nvim-mini/mini.pairs',
-  'https://github.com/nvim-mini/mini.move',
-  'https://github.com/nvim-mini/mini.splitjoin',
-  'https://github.com/nvim-mini/mini.cmdline',
   'https://github.com/kylechui/nvim-surround',
+  'https://github.com/nvim-treesitter/nvim-treesitter',
   'https://github.com/nvim-treesitter/nvim-treesitter-textobjects',
 })
 
@@ -16,9 +11,13 @@ vim.keymap.set({'n', 'v'}, 'gk', "v:count == 0 ? 'k' : 'gk'", { expr = true, sil
 vim.keymap.set({'n', 'v'}, 'gj', "v:count == 0 ? 'j' : 'gj'", { expr = true, silent = true })
 
 -- Leap
-vim.keymap.set('n', 's', '<Plug>(leap-forward)', {desc = "Leap forward"})
-vim.keymap.set('n', 'S', '<Plug>(leap-backward)', {desc = "Leap backward"})
+vim.pack.add({ 'https://codeberg.org/andyg/leap.nvim' })
+vim.keymap.set('n', 's', '<Plug>(leap-forward)', { desc = "Leap forward" })
+vim.keymap.set('n', 'S', '<Plug>(leap-backward)', { desc = "Leap backward" })
 
+vim.pack.add({
+  'https://github.com/nvim-mini/mini.ai',
+})
 local mai = require('mini.ai')
 require('mini.ai').setup({
   n_lines = 500,
@@ -41,6 +40,7 @@ require('mini.ai').setup({
   }
 })
 
+vim.pack.add({ 'https://github.com/nvim-mini/mini.move' })
 require('mini.move').setup({
   mappings = {
     left = "<S-left>",
@@ -54,8 +54,10 @@ require('mini.move').setup({
   }
 })
 
+vim.pack.add({ 'https://github.com/nvim-mini/mini.pairs' })
 require('mini.pairs').setup()
 
+vim.pack.add({ 'https://github.com/nvim-mini/mini.splitjoin' })
 require('mini.splitjoin').setup({
   mappings = {
     toggle = 'g[',
@@ -64,7 +66,25 @@ require('mini.splitjoin').setup({
   }
 })
 
-require('mini.cmdline').setup()
+-- vim.pack.add({'https://github.com/nvim-mini/mini.cmdline'})
+-- require('mini.cmdline').setup()
 
 -- Splitjoin
 vim.keymap.set('i', '<C-]>', function() require('mini.splitjoin').toggle() end, {desc = "Toggle splitjoin"})
+
+-- Conform
+vim.pack.add({'https://github.com/stevearc/conform.nvim'})
+require('conform').setup({
+  formatters_by_ft = {
+    lua = {"stylua"},
+    python = {"isort", "black"},
+    r = {"air"},
+    hcl = {"hclfmt"},
+    sh = {"shfmt"}
+  },
+  default_format_opts = {
+    lsp_format = "fallback"
+  },
+})
+
+vim.keymap.set({"n", "x"}, "<leader>fm", function() require('conform').format({async = true}) end, {desc = "Format buffer or selection"})

@@ -1,8 +1,5 @@
 vim.pack.add({
-  'https://github.com/nvim-treesitter/nvim-treesitter',
   'https://github.com/neovim/nvim-lspconfig',
-  { src = 'https://github.com/saghen/blink.cmp', version = vim.version.range('v1.*') },
-  -- 'https://github.com/jmbuhr/cmp-pandoc-references',
 })
 
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -20,6 +17,10 @@ end, {})
 
 vim.keymap.set('n', '<leader>?', vim.diagnostic.open_float, {desc = "Current diagnostic"})
 
+vim.pack.add({
+  { src = 'https://github.com/saghen/blink.cmp', version = vim.version.range('v1.*') },
+  -- 'https://github.com/jmbuhr/cmp-pandoc-references',
+})
 require('blink.cmp').setup({
   keymap = {
     preset = "super-tab",

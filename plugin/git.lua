@@ -7,13 +7,12 @@ vim.pack.add({
 -- git
 require('neogit').setup({
   disable_commit_confirmation = true,
-  -- mappings = {
-  --   popup = {
-  --     ["F"] = "PullPopup",
-  --     ["p"] = "PushPopup"
-  -- },
-  -- kind = "split_above"
-  -- popup = {kind = "split_above"}
+  mappings = {
+    popup = {
+      ["F"] = "PullPopup",
+      ["p"] = "PushPopup"
+    }
+  },
 })
 
 require('gitsigns').setup()

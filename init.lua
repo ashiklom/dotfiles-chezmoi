@@ -59,9 +59,7 @@ vim.pack.add({
   -- "https://github.com/folke/which-key.nvim",
   'https://github.com/nvim-mini/mini.bufremove',
   'https://github.com/nvim-mini/mini.icons',
-  'https://github.com/stevearc/oil.nvim',
-  --
-  'https://github.com/stevearc/conform.nvim'
+  'https://github.com/stevearc/oil.nvim'
 })
 
 require('mini.icons').setup()
