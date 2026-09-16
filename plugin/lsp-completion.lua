@@ -5,11 +5,20 @@ vim.pack.add({
   -- 'https://github.com/jmbuhr/cmp-pandoc-references',
 })
 
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("ansauto_lsp", {clear = true}),
+  callback = function (_)
+    vim.diagnostic.config({ virtual_text = true })
+  end
+})
+
 vim.keymap.set("n", "<leader>gz", function()
   vim.diagnostic.enable(not vim.diagnostic.is_enabled())
   local diag_status = vim.diagnostic.is_enabled() and "enabled" or "disabled"
   vim.notify("LSP diagnostics " .. diag_status)
 end, {})
+
+vim.keymap.set('n', '<leader>?', vim.diagnostic.open_float, {desc = "Current diagnostic"})
 
 require('blink.cmp').setup({
   keymap = {
