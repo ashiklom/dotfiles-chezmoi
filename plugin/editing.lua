@@ -10,6 +10,13 @@ vim.keymap.set({'n', 'v'}, 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, sile
 vim.keymap.set({'n', 'v'}, 'gk', "v:count == 0 ? 'k' : 'gk'", { expr = true, silent = true })
 vim.keymap.set({'n', 'v'}, 'gj', "v:count == 0 ? 'j' : 'gj'", { expr = true, silent = true })
 
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup('ansauto_fo', { clear = true }),
+  callback = function()
+    vim.opt_local.formatoptions:remove({"o"})
+  end
+})
+
 -- Leap
 vim.pack.add({ 'https://codeberg.org/andyg/leap.nvim' })
 vim.keymap.set('n', 's', '<Plug>(leap-forward)', { desc = "Leap forward" })

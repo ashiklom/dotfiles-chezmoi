@@ -26,7 +26,6 @@ vim.opt.listchars = "tab:>-,trail:-,nbsp:+"
 -- vim.opt.wildignore:append({'*.o', '*.so', '*.html'})
 
 vim.opt.formatoptions:remove("t")
-vim.opt.formatoptions:remove("o")
 vim.opt.formatoptions:append("w")
 
 -- Disable mouse
