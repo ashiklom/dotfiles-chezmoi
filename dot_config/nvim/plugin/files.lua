@@ -17,10 +17,24 @@ require('oil').setup({
 vim.keymap.set('n', "<leader>fs", vim.cmd.write, {desc = "Save file"})
 vim.keymap.set('n', "<leader>fo", function() vim.cmd.edit('.') end, {desc = "Open file directory"})
 
+local function git_root_or_cwd()
+  local filedir = vim.fn.expand('%:p:h')
+  local result = vim.system({'git', '-C', filedir, 'rev-parse', '--show-toplevel'}):wait()
+  if result.code ~= 0 then
+    vim.notify("Git failed with: " .. result.stderr, vim.log.levels.INFO)
+    return filedir
+  end
+  return vim.trim(result.stdout)
+end
+
+vim.keymap.set('n', '<leader>cd', function() vim.api.nvim_set_current_dir(git_root_or_cwd()) end)
+
 vim.keymap.set('i', 'jk', '<ESC>', {desc = "Normal mode"})
 vim.keymap.set('n', '<ESC>', vim.cmd.nohlsearch)
 vim.keymap.set('n', 'z.', 'zszH', {desc = "Center horizontally on character"})
 vim.keymap.set('n', 'gb', '<C-^>', {desc = "Most recent buffer"})
+
+vim.keymap.set('n', '<leader>qq', vim.cmd.quitall, { desc = "Quit all" })
 
 vim.keymap.set('n', "<leader>w-", vim.cmd.split, {desc = "Split window down"})
 vim.keymap.set('n', "<leader>w\\", vim.cmd.vsplit, {desc = "Split window down"})
