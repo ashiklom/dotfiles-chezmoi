@@ -2,6 +2,7 @@ require("nvim-treesitter").install({ "r", "markdown", "rnoweb", "yaml" }):wait(3
 vim.treesitter.start()
 
 local api = require('jet.api')
+local au = require('ans-utils')
 
 local function_query = "(binary_operator lhs: (_) rhs: (function_definition)) @func"
 
@@ -17,16 +18,6 @@ local function send_code_to_repl(code)
     end
   )
   end
-end
-
-local function send_selection()
-  local start_row = vim.fn.getpos("'<")[2] - 1
-  local start_col = vim.fn.getpos("'<")[3] - 1
-  local end_row = vim.fn.getpos("'>")[2] - 1
-  local end_col = vim.fn.getpos("'>")[3]
-  local lines = vim.api.nvim_buf_get_text(0, start_row, start_col, end_row, end_col, {})
-  local code = table.concat(lines, "\n")
-  send_code_to_repl(code)
 end
 
 local function goto_expression(dir)
@@ -133,7 +124,12 @@ vim.keymap.set(
 )
 
 vim.keymap.set("n", "<localleader>l", send_expression, { desc = "Send current expression to R", buffer = 0 })
-vim.keymap.set("x", "<localleader>ss", send_selection, { desc = "Send visual selection to R", buffer = 0 })
+vim.keymap.set(
+  "x",
+  "<localleader>ss",
+  function() send_code_to_repl(au.get_visual_selection()) end,
+  { desc = "Send visual selection to R", buffer = 0 }
+)
 vim.keymap.set("n", "<localleader>d", function()
   send_expression()
   goto_expression(1)
