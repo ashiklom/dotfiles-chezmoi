@@ -95,3 +95,10 @@ require('conform').setup({
 })
 
 vim.keymap.set({"n", "x"}, "<leader>fm", function() require('conform').format({async = true}) end, {desc = "Format buffer or selection"})
+
+vim.pack.add({"https://github.com/chrisgrieser/nvim-scissors"})
+require('scissors').setup({
+  snippetDir = vim.fn.stdpath("config") .. "/snippets"
+})
+vim.keymap.set("n", "<leader>ne", function() require('scissors').editSnippet() end, { desc = "Edit snippet" })
+vim.keymap.set({"n", "x"}, "<leader>na", function() require('scissors').addNewSnippet() end, { desc = "Add new snippet" })

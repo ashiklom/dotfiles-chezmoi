@@ -1,0 +1,1 @@
+{"key":{"prefix":"key","body":"{\"$1\", function() $2 end, mode = {\"n\", \"x\"}, desc = \"$3\"}"},"inline function":{"body":"function() $0 end","description":"Inline function","prefix":"fni"}}

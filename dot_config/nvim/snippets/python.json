@@ -1,0 +1,52 @@
+{
+  "#!/usr/bin/env python": {
+    "body": "#!/usr/bin/env python",
+    "description": "Shebang for python",
+    "prefix": "#!"
+  },
+  "#uvx": {
+    "body": [
+      "#!/usr/bin/env -S uv run --script",
+      "#",
+      "# /// script",
+      "# requires-python = \">=3.13\"",
+      "# dependencies = []",
+      "# ///"
+    ],
+    "prefix": "#uvx"
+  },
+  "from matplotlib import pyplot as plt": {
+    "body": "from matplotlib import pyplot as plt",
+    "description": "Import matplotlib",
+    "prefix": "mpl"
+  },
+  "from pathlib import Path": {
+    "body": "from pathlib import Path",
+    "description": "Import pathlib.Path",
+    "prefix": "pth"
+  },
+  "ifmain": {
+    "body": [
+      "if __name__ == \"__main__\":",
+      "    ${1:}"
+    ],
+    "prefix": "ifmain"
+  },
+  "import xarray as xr": {
+    "body": "import xarray as xr",
+    "description": "Import xarray",
+    "prefix": "xr"
+  },
+  "interactive": {
+    "body": [
+      "import __main__",
+      "INTERACTIVE = not hasattr(__main__, '__file__')"
+    ],
+    "description": "Check if interactive",
+    "prefix": "interactive"
+  },
+  "pmk": {
+    "body": "mkdir(exist_ok=True)",
+    "prefix": "pmk"
+  }
+}
