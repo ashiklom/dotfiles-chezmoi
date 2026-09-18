@@ -1,10 +1,4 @@
-vim.pack.add({
-  'https://github.com/NeogitOrg/neogit',
-  'https://github.com/sindrets/diffview.nvim',
-  'https://github.com/lewis6991/gitsigns.nvim',
-})
-
--- git
+vim.pack.add({'https://github.com/NeogitOrg/neogit'})
 require('neogit').setup({
   disable_commit_confirmation = true,
   mappings = {
@@ -15,6 +9,7 @@ require('neogit').setup({
   },
 })
 
+vim.pack.add({'https://github.com/lewis6991/gitsigns.nvim'})
 require('gitsigns').setup()
 
 vim.keymap.set('n', "<leader>gg", function() require('neogit').open() end, {desc = "Neogit"})
@@ -25,3 +20,15 @@ vim.keymap.set('n', "<leader>hs", function() require('gitsigns').stage_hunk() en
 vim.keymap.set('n', "<leader>hx", function() require('gitsigns').reset_hunk() end, {desc = "Reset hunk"})
 vim.keymap.set('n', "<leader>hz", function() require('gitsigns').undo_stage_hunk() end, {desc = "Undo stage hunk"})
 vim.keymap.set('n', "<leader>hb", function() require('gitsigns').blame_line() end, {desc = "Blame line"})
+
+vim.pack.add({'https://github.com/sindrets/diffview.nvim'})
+require('diffview').setup({
+  keymaps = {
+    view = {
+      { "n", "q", function() require('diffview').close() end, { desc = "Close diffview" } }
+    },
+    file_panel = {
+      { "n", "q", function() require('diffview').close() end, { desc = "Close diffview" } }
+    }
+  }
+})

@@ -68,7 +68,6 @@ vim.api.nvim_create_autocmd("FileType", {
     "checkhealth",
     "grug-far",
     "nvim-pack",
-    "oil"
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
@@ -79,3 +78,19 @@ vim.api.nvim_create_autocmd("FileType", {
     })
   end
 })
+
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup('unshow_with_q', { clear = true }),
+  pattern = {
+    "oil"
+  },
+  callback = function(event)
+    vim.bo[event.buf].buflisted = false
+    vim.keymap.set("n", "q", MiniBufremove.unshow, {
+      buffer = event.buf,
+      silent = true,
+      desc = "Unshow buffer"
+    })
+  end
+})
+
