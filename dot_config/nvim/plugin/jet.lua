@@ -9,12 +9,13 @@ require("jet.ark").setup({
 	ark_binary_path = "~/.local/bin/ark",
 })
 
-local toggle_repl = function()
-	local ft = vim.bo.filetype
-	return function()
-		require("jet.api").get_kernel({ filetype = ft }, function(k) k:term_toggle() end)
-	end
-end
-
-vim.keymap.set("n", "<leader>jp", toggle_repl("python"), { desc = "Open Python (Jet)" })
-vim.keymap.set("n", "<leader>jr", toggle_repl("r"), { desc = "Open R (Jet)" })
+vim.api.nvim_create_autocmd("BufWinEnter", {
+  group = vim.api.nvim_create_augroup("ans_jetrepl", { clear = true }),
+  callback = function (args)
+    if vim.bo[args.buf].filetype == 'jetrepl' then
+      local win = vim.fn.bufwinid(args.buf)
+      local width = math.min(100, math.floor(vim.o.columns * 0.5))
+      vim.api.nvim_win_set_width(win, width)
+    end
+  end
+})
