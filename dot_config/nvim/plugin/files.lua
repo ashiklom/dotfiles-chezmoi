@@ -15,7 +15,8 @@ require('oil').setup({
 
 
 vim.keymap.set('n', "<leader>fs", vim.cmd.write, {desc = "Save file"})
-vim.keymap.set('n', "<leader>fo", function() vim.cmd.edit('.') end, {desc = "Open file directory"})
+vim.keymap.set('n', "<leader>fo", function() vim.cmd.edit(vim.fn.expand('%:h')) end, {desc = "Open file directory"})
+vim.keymap.set('n', "<leader>fO", function() vim.cmd.edit('.') end, {desc = "Open current working directory"})
 
 local function git_root_or_cwd()
   local filedir = vim.fn.expand('%:p:h')
