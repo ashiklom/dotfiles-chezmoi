@@ -3,6 +3,7 @@ require('mini.icons').setup()
 
 vim.pack.add({ 'https://github.com/nvim-mini/mini.bufremove' })
 require('mini.bufremove').setup()
+vim.keymap.set('n', "<leader>bd", function() MiniBufremove.delete() end, { desc = "Delete current buffer" })
 
 vim.pack.add({'https://github.com/stevearc/oil.nvim'})
 require('oil').setup({
