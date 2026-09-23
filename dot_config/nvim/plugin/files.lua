@@ -15,11 +15,11 @@ require('oil').setup({
 
 
 vim.keymap.set('n', "<leader>fs", vim.cmd.write, {desc = "Save file"})
-vim.keymap.set('n', "<leader>fo", function() vim.cmd.edit(vim.fn.expand('%:h')) end, {desc = "Open file directory"})
-vim.keymap.set('n', "<leader>fO", function() vim.cmd.edit('.') end, {desc = "Open current working directory"})
+vim.keymap.set('n', "<leader>fo", function() vim.cmd.edit(require('ans-utils').get_dir()) end, {desc = "Open file directory"})
+vim.keymap.set('n', "<leader>fO", function() vim.cmd.edit(vim.uv.cwd()) end, {desc = "Open current working directory"})
 
 local function git_root_or_cwd()
-  local filedir = vim.fn.expand('%:p:h')
+  local filedir = require('ans-utils').get_dir()
   local result = vim.system({'git', '-C', filedir, 'rev-parse', '--show-toplevel'}):wait()
   if result.code ~= 0 then
     vim.notify("Git failed with: " .. result.stderr, vim.log.levels.INFO)
