@@ -22,19 +22,23 @@
       "src": "https://github.com/sindrets/diffview.nvim"
     },
     "fzf-lua": {
-      "rev": "05e44d38de0a79c11fba5f7bf8138791b1dbdd1e",
+      "rev": "13bb178a299f7493dd64427a58e61904c4b58ecb",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
-      "rev": "5eb287fdbd523c3a1b3d01f304f43570e73e259b",
+      "rev": "070a5d7b985546cc57e1fc61e5bc507fecac6045",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "jet.ark": {
-      "rev": "8852d2a0b1c6e4695ebab555e45ad0c259d3a506",
+      "rev": "dc16a50005bc87226dfff35e3ee00c553f332512",
       "src": "https://github.com/wurli/jet.ark"
     },
+    "jet.ipy": {
+      "rev": "34f5d97fc059578b4b05d7825633001a619f941e",
+      "src": "https://github.com/wurli/jet.ipy"
+    },
     "jet.nvim": {
-      "rev": "e3b050a2cf0fbd452ecb0980d057b5189a609c3b",
+      "rev": "505c7e578d96dec40df33f57c1e3c33d51c30973",
       "src": "https://github.com/wurli/jet.nvim"
     },
     "lazygit.nvim": {
@@ -42,11 +46,11 @@
       "src": "https://github.com/kdheepak/lazygit.nvim"
     },
     "leap.nvim": {
-      "rev": "38af0ab56c6eb8757ee6006dd13ab79c2bc11a49",
+      "rev": "32bde2e932417e8a065f039f00f0cebdd0da4710",
       "src": "https://codeberg.org/andyg/leap.nvim"
     },
     "mini.ai": {
-      "rev": "cb02c5444613475b7edf0c8dc98264c1c857aa6e",
+      "rev": "6c39ae7b11abe479fbe1bc81bf00ac6bca7afa07",
       "src": "https://github.com/nvim-mini/mini.ai"
     },
     "mini.bufremove": {
@@ -58,7 +62,7 @@
       "src": "https://github.com/nvim-mini/mini.cmdline"
     },
     "mini.icons": {
-      "rev": "98faae31e9be1cc054ae63485e58ceb185efcad0",
+      "rev": "f642e3ba8c12afbc8f32f6d77ef6597eac56786f",
       "src": "https://github.com/nvim-mini/mini.icons"
     },
     "mini.move": {
@@ -86,7 +90,7 @@
       "src": "https://github.com/catppuccin/nvim"
     },
     "nvim-lspconfig": {
-      "rev": "ac9d2f7c4757db6320cab6697fe73e5e8adb2457",
+      "rev": "046b1a797af1effe8e0474b9af9657a3761ec58a",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-scissors": {
@@ -98,7 +102,7 @@
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-treesitter": {
-      "rev": "9a168f6357ed21c3a636e1727bc7d382abc451b8",
+      "rev": "f603a2f4da48728f80257fb5fbb90145fd1dc173",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "nvim-treesitter-textobjects": {
