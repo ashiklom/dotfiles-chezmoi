@@ -39,3 +39,5 @@ vim.keymap.set('n', "<leader>sw", function() require('fzf-lua').grep_cword() end
 vim.keymap.set('n', "<leader>sW", function() require('fzf-lua').grep_cWORD() end, {desc = "Search current WORD"})
 vim.keymap.set('n', '<leader>s"', function() require('fzf-lua').registers() end, {desc = "Registers"})
 vim.keymap.set('x', '<leader>/', function() require('fzf-lua').grep_visual() end, {desc = "Search project for selection"})
+
+vim.keymap.set('n', 'z=', function() require('fzf-lua').spell_suggest() end, { desc = "Spell suggest" })
