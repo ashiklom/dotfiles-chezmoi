@@ -1,6 +1,13 @@
 require("nvim-treesitter").install({ "r", "markdown", "rnoweb", "yaml" }):wait(300000)
 vim.treesitter.start()
 
+vim.pack.add({
+  "https://github.com/wurli/jet.ark",
+})
+require("jet.ark").setup({
+	ark_binary_path = "~/.local/bin/ark",
+})
+
 local api = require('jet.api')
 local au = require('ans-utils')
 
