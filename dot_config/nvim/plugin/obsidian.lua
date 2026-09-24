@@ -16,6 +16,9 @@ require("obsidian").setup({
   daily_notes = {
     enabled = true,
     folder = "Daily"
+  },
+  checkbox = {
+    order = { " ", "x" }
   }
 })
 
