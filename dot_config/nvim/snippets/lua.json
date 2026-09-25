@@ -1,1 +1,23 @@
-{"key":{"prefix":"key","body":"{\"$1\", function() $2 end, mode = {\"n\", \"x\"}, desc = \"$3\"}"},"inline function":{"body":"function() $0 end","description":"Inline function","prefix":"fni"}}
+{
+  "aucmd": {
+    "body": [
+      "vim.api.nvim_create_autocmd(\"${1:}\", {",
+      "  group = vim.api.nvim_create_augroup(\"ans_${2:}\", { clear = true }),",
+      "  pattern = {},",
+      "  callback = function()",
+      "    ${3:}",
+      "  end,",
+      "})"
+    ],
+    "prefix": "aucmd"
+  },
+  "inline function": {
+    "body": "function() $0 end",
+    "description": "Inline function",
+    "prefix": "fni"
+  },
+  "key": {
+    "body": "{\"$1\", function() $2 end, mode = {\"n\", \"x\"}, desc = \"$3\"}",
+    "prefix": "key"
+  }
+}
