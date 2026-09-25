@@ -13,9 +13,13 @@ vim.api.nvim_create_autocmd("TermOpen", {
   group = vim.api.nvim_create_augroup("ansauto_esc2", {clear = true}),
   pattern = {"term://*"},
   callback = function(ev)
-    if not no_esc[vim.bo[ev.buf].filetype] then
-      vim.keymap.set('t', '<esc><esc>', [[<C-\><C-n>]], {buffer=true, nowait=true})
+    if no_esc[vim.bo[ev.buf].filetype] then
+      return
     end
+    if vim.api.nvim_buf_get_name(ev.buf):find("lazygit", 1, true) then
+      return
+    end
+    vim.keymap.set('t', '<esc><esc>', [[<C-\><C-n>]], {buffer=true, nowait=true})
   end
 })
 
