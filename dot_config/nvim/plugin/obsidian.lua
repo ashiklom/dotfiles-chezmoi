@@ -1,3 +1,10 @@
+-- Skip this whole file if the obidian workspace doesn't exist
+local obsidian_dir = vim.fn.expand("~/obsidian-notes")
+local stat = vim.uv.fs_stat(obsidian_dir .. "/.obsidian")
+if not stat or stat.type ~= "directory" then
+  return
+end
+
 vim.pack.add({
   { src = "https://github.com/obsidian-nvim/obsidian.nvim", version = vim.version.range('*') }
 })
@@ -10,7 +17,7 @@ require("obsidian").setup({
   workspaces = {
     {
       name = "main",
-      path = "~/obsidian-notes"
+      path = obsidian_dir
     }
   },
   daily_notes = {
