@@ -4,13 +4,63 @@ vim.pack.add({
 })
 
 vim.treesitter.language.register('markdown', 'quarto')
+require('nvim-treesitter').install({ "markdown", "markdown_inline", "r", "python", "yaml" })
 
-require('quarto').setup({})
+-- jet.ark's setup adds a kernel hook each time it runs, so only run it once
+if not vim.g.ans_jet_ark_setup then
+  vim.pack.add({
+    "https://github.com/wurli/jet.ark",
+  })
+  require("jet.ark").setup({
+    ark_binary_path = "~/.local/bin/ark",
+  })
+  vim.g.ans_jet_ark_setup = true
+end
+if not vim.g.ans_jet_ipy_setup then
+  vim.pack.add({
+    "https://github.com/wurli/jet.ipy"
+  })
+  require('jet.ipy').setup()
+  vim.g.ans_jet_ipy_setup = true
+end
+
+local repl = require('ans-repl')
+
+require('quarto').setup({
+  codeRunner = {
+    enabled = true,
+    -- Send cells to jet.nvim kernels (jet.ark for R, jet.ipy for Python)
+    default_method = function(cell, _)
+      if not repl.languages[cell.lang] then
+        vim.notify("[Quarto] no jet runner for language: " .. tostring(cell.lang), vim.log.levels.WARN)
+        return
+      end
+      repl.handlers(cell.lang).send(table.concat(cell.text, "\n"))
+    end,
+  },
+})
 
 local ok, otter = pcall(require, 'otter')
 if ok then
   otter.activate()
 end
+
+-- Code running ---------------------------------------------------------------
+
+-- The usual R/Python REPL keymaps, acting on the language of the current cell
+repl.setup_embedded({
+  r = "(binary_operator lhs: (_) rhs: (function_definition)) @func",
+  python = "(function_definition) @func",
+})
+vim.keymap.set("n", "<localleader>rp", function() repl.send_cword("print(%s)") end,
+  { desc = "Print object under cursor", buffer = true })
+
+local runner = require('quarto.runner')
+vim.keymap.set("n", "<localleader>cc", runner.run_cell, { buffer = true, desc = "Run cell" })
+vim.keymap.set("n", "<localleader>cu", runner.run_above, { buffer = true, desc = "Run cell and above" })
+vim.keymap.set("n", "<localleader>cd", runner.run_below, { buffer = true, desc = "Run cell and below" })
+vim.keymap.set("n", "<localleader>cA", function() runner.run_all(true) end,
+  { buffer = true, desc = "Run all cells (all languages)" })
 
 vim.opt_local.wrap = true
 
