@@ -1,5 +1,4 @@
 require("nvim-treesitter").install({ "r", "markdown", "rnoweb", "yaml" }):wait(300000)
-vim.treesitter.start()
 
 -- jet.ark's setup adds a kernel hook each time it runs, so only run it once
 if not vim.g.ans_jet_ark_setup then

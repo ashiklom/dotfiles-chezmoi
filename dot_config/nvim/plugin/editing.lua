@@ -102,3 +102,11 @@ require('scissors').setup({
 })
 vim.keymap.set("n", "<leader>ne", function() require('scissors').editSnippet() end, { desc = "Edit snippet" })
 vim.keymap.set({"n", "x"}, "<leader>na", function() require('scissors').addNewSnippet() end, { desc = "Add new snippet" })
+
+-- Enable treesitter by default
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup("ans_treesitter", { clear = true }),
+  callback = function(ev)
+    pcall(vim.treesitter.start, ev.buf)
+  end,
+})
