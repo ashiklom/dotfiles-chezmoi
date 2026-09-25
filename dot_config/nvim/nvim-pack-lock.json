@@ -34,7 +34,7 @@
       "src": "https://github.com/wurli/jet.ark"
     },
     "jet.ipy": {
-      "rev": "34f5d97fc059578b4b05d7825633001a619f941e",
+      "rev": "de00a216db78d0062794d8dd743f46bcf73f6745",
       "src": "https://github.com/wurli/jet.ipy"
     },
     "jet.nvim": {
@@ -133,6 +133,10 @@
     "quarto-nvim": {
       "rev": "17f1e5d664bc615478230dc0240666329efacf9b",
       "src": "https://github.com/quarto-dev/quarto-nvim"
+    },
+    "snacks.nvim": {
+      "rev": "882c996cf28183f4d63640de0b4c02ec886d01f2",
+      "src": "https://github.com/folke/snacks.nvim"
     },
     "toggleterm.nvim": {
       "rev": "9a88eae817ef395952e08650b3283726786fb5fb",
