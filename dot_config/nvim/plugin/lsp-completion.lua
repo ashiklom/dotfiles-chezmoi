@@ -13,7 +13,7 @@ vim.keymap.set("n", "<leader>gz", function()
   vim.diagnostic.enable(not vim.diagnostic.is_enabled())
   local diag_status = vim.diagnostic.is_enabled() and "enabled" or "disabled"
   vim.notify("LSP diagnostics " .. diag_status)
-end, {})
+end, {desc = "Toggle LSP diagnostics"})
 
 vim.keymap.set('n', '<leader>?', vim.diagnostic.open_float, {desc = "Current diagnostic"})
 
