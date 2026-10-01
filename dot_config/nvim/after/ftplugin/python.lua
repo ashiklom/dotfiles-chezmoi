@@ -19,7 +19,9 @@ if not vim.g.ans_jet_ipy_setup then
   vim.pack.add({
     "https://github.com/wurli/jet.ipy"
   })
-  require('jet.ipy').setup()
+  require('jet.ipy').setup({
+    check_for_venv = false
+  })
   vim.g.ans_jet_ipy_setup = true
 end
 
