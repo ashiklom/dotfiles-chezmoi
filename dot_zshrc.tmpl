@@ -109,6 +109,9 @@ path+=("$WEZTERM_DIR")
 
 [ -f "$HOME/.bash_aliases" ] && \. "$HOME/.bash_aliases"
 
+# Starship prompt
+(( $+commands[starship] )) && eval "$(starship init zsh)"
+
 # Deduplicate PATH
 typeset -U PATH
 export PATH
