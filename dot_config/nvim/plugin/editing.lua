@@ -86,7 +86,7 @@ require('conform').setup({
     lua = {"stylua"},
     python = {"isort", "black"},
     r = {"air"},
-    hcl = {"hclfmt"},
+    terraform = {"tofu_fmt"},
     sh = {"shfmt"}
   },
   default_format_opts = {

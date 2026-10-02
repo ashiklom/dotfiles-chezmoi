@@ -1,3 +1,3 @@
 require('nvim-treesitter').install({ "terraform" })
 
-vim.lsp.enable({ "terraformls" })
+vim.lsp.enable({ "tofu_ls" })
