@@ -1,4 +1,4 @@
-# Start configuration added by Zim install {{{
+# Start configuration added by Zim install
 #
 # This is not sourced during shell startup, and it's only used to configure the
 # zimfw plugin manager.
@@ -34,10 +34,12 @@ zmodule sorin
 
 zmodule joke/zim-github-cli
 
+{{- if .is_wsl }}
 # SSH configuration
 zstyle :omz:plugins:ssh-agent agent-forwarding yes
 zstyle :omz:plugins:ssh-agent quiet yes
 zmodule ohmyzsh/ohmyzsh --root plugins/ssh-agent
+{{- end }}
 
 #
 # Completion
@@ -62,4 +64,5 @@ zmodule zsh-users/zsh-history-substring-search
 # Fish-like autosuggestions for Zsh.
 zmodule zsh-users/zsh-autosuggestions
 
-# }}} End configuration added by Zim install
+# End configuration added by Zim install
+# vim: set filetype=zsh :
