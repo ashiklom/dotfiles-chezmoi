@@ -62,6 +62,4 @@ zmodule zsh-users/zsh-history-substring-search
 # Fish-like autosuggestions for Zsh.
 zmodule zsh-users/zsh-autosuggestions
 
-# Better nvm management
-zmodule lukechilds/zsh-nvm
 # }}} End configuration added by Zim install
