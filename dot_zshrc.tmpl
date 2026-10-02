@@ -69,22 +69,25 @@ if [[ -f "$HOME/.dircolors" ]]; then
   fi
 fi
 
-# Add incremental search key
-# NOTE: `fzf` (below) will override this if installed
+# Incremental search
+# Start with built-in fzf functionality. Add progressively better stuff if available. 
 bindkey '^r' history-incremental-search-backward
-
-# fzf
-if [[ -f "$HOME/.fzf.zsh" ]]; then
-  source "$HOME/.fzf.zsh"
+if (( $+commands[fzf] )); then
+  if (( $+commands[fd] )); then
+    _fzf_compgen_path() { fd --hidden --follow --exclude .git . "$1" }
+    _fzf_compgen_dir()  { fd --type d --hidden --follow --exclude .git . "$1" }
+    export FZF_DEFAULT_COMMAND="fd --type f"
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+    export FZF_ALT_C_COMMAND="fd --type d"
+  fi
+  eval "$(fzf --zsh)"
 fi
+(( $+commands[tv] )) && eval "$(tv init zsh)"
+(( $+commands[atuin] )) && eval "$(atuin init zsh)"
 
 MY_SPACKDIR="$HOME/projects/src/spack"
 if [ -f "$MY_SPACKDIR/share/spack/setup-env.sh" ]; then
   source "$MY_SPACKDIR/share/spack/setup-env.sh"
-fi
-
-if command -v tv &> /dev/null; then
-  eval "$(tv init zsh)"
 fi
 
 # Completions for AWS SSO
