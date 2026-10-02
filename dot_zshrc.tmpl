@@ -59,16 +59,9 @@ unset key
 
 # End configuration added by Zim install
 
-# Configure colors
-{{ $c := .colors }}
-
-export GREP_COLORS="\
-  ms=1;38;2;{{ $c.yellow }}:\
-  mc=1;38;2;{{ $c.yellow }}:\
-  fn=38;2;{{ $c.blue }}:\
-  ln=38;2;{{ $c.peach }}:\
-  bn=38;2;{{ $c.green }}:\
-  se=38;2;{{ $c.mauve }}"
+# Unset grep colors --- use the system defaults (which look much better)
+unset GREP_COLORS
+unset GREP_COLOR
 
 if [[ -f "$HOME/.dircolors" ]]; then
   if command -v gdircolors &> /dev/null; then
