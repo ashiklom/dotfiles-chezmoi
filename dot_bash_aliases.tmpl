@@ -91,12 +91,27 @@ azactivate() {
 {{- end }}
 
 apache() {
+  TARGET=${1:-LICENSE}
+  OWNER=${2:-yale}
+  YEAR=$(date +'%Y')
+  case $OWNER in
+    yale)
+      OWNER_FULL="Yale University"
+      ;;
+    me)
+      OWNER_FULL="Alexey N. Shiklomanov"
+      ;;
+    *)
+      OWNER_FULL="$OWNER"
+      ;;
+  esac
   LICENSEFILE="$HOME/.cache/apache_2_0"
   if [[ ! -f $LICENSEFILE ]]; then
     echo "$LICENSEFILE not found in cache. Downloading..."
     curl -L https://www.apache.org/licenses/LICENSE-2.0.txt -o $LICENSEFILE
   fi
-  cp $LICENSEFILE ${1:-LICENSE}
+  echo "Creating Apache 2.0 license in $TARGET with year $YEAR and owner '$OWNER_FULL'"
+  sed "s/Copyright \[yyyy\] \[name of copyright owner\]/Copyright $YEAR $OWNER_FULL/" "$LICENSEFILE" > $TARGET
 }
 
 ghostic() {
