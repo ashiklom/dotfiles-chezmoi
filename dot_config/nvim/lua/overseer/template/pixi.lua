@@ -1,6 +1,4 @@
 --- overseer template: pixi.toml tasks
---- Place this file at:
----   ~/.config/nvim/lua/overseer/template/pixi.lua
 
 local overseer = require("overseer")
 
