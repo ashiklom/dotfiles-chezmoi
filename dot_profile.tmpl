@@ -10,11 +10,10 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # Add a directory to PATH if the directory exists and is not already in PATH
 _addpath() {
-  local hdir="$1"
-  [[ ! -d "$hdir" ]] && return 0
+  [ -d "$1" ] || return 0
   case ":$PATH:" in
-    *":$hdir:"*) ;;
-    *) PATH="$hdir${PATH:+:${PATH}}" ;;
+    *":$1:"*) ;;
+    *) PATH="$1${PATH:+:${PATH}}" ;;
   esac
   return 0
 }
