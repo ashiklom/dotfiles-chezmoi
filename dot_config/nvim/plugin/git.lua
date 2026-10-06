@@ -1,4 +1,7 @@
-vim.pack.add({'https://github.com/NeogitOrg/neogit'})
+vim.pack.add({
+  'https://github.com/NeogitOrg/neogit',
+  'https://github.com/nvim-lua/plenary.nvim'  -- dependency
+})
 require('neogit').setup({
   disable_commit_confirmation = true,
   mappings = {
