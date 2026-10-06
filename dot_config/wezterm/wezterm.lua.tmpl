@@ -137,18 +137,6 @@ wezterm.on('trigger-vim-with-scrollback', function(window, pane)
   os.remove(name)
 end)
 
-table.insert(config.keys, {
-  key = 'E',
-  mods = 'LEADER',
-  action = act.EmitEvent 'trigger-vim-with-scrollback',
-})
-
-table.insert(config.keys, {
-  key = 'Enter',
-  mods = 'LEADER',
-  action = act.ActivateCopyMode,
-})
-
 return config
 
 -- vim: set filetype=lua :
