@@ -32,7 +32,6 @@ require("obsidian").setup({
 local function set_obsidian_maps()
   vim.keymap.set('n', '<leader>vv', '<cmd>Obsidian<CR>', { desc = "Obsidian", buffer = true })
   vim.keymap.set('n', '<leader>vd', '<cmd>Obsidian today<CR>', { desc = "Obsidian today", buffer = true })
-  vim.keymap.set('n', '<leader>vl', '<cmd>Obsidian today<CR>', { desc = "Obsidian today", buffer = true })
   vim.keymap.set('n', '<leader> ', '<cmd>Obsidian quick_switch<CR>', { desc = "Obsidian quick switch", buffer = true })
   vim.keymap.set('n', '<leader>/', '<cmd>Obsidian search<CR>', { desc = "Obsidian search", buffer = true })
   vim.keymap.set('i', '<C-l>', '<cmd>Obsidian quick_switch<CR>', { desc = "Obsidian quick switch", buffer = true })

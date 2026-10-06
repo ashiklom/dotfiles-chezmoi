@@ -29,8 +29,7 @@ local function git_root_or_cwd()
   return vim.trim(result.stdout)
 end
 
-vim.keymap.set('n', '<leader>cd', function() vim.api.nvim_set_current_dir(git_root_or_cwd()) end)
-
+vim.keymap.set('n', '<leader>cd', function() vim.api.nvim_set_current_dir(git_root_or_cwd()) end, { desc = "cd to current directory"})
 vim.keymap.set('i', 'jk', '<ESC>', {desc = "Normal mode"})
 vim.keymap.set('n', '<ESC>', vim.cmd.nohlsearch)
 vim.keymap.set('n', 'z.', 'zszH', {desc = "Center horizontally on character"})
@@ -40,7 +39,7 @@ vim.keymap.set('n', '<leader>qq', vim.cmd.quitall, { desc = "Quit all" })
 
 vim.keymap.set('n', "<leader>w-", vim.cmd.split, {desc = "Split window down"})
 vim.keymap.set('n', "<leader>w\\", vim.cmd.vsplit, {desc = "Split window down"})
-vim.keymap.set('n', "<leader>wd", vim.cmd.close, {desc = "Split window down"})
+vim.keymap.set('n', "<leader>wd", vim.cmd.close, {desc = "Close window"})
 vim.keymap.set('n', "<leader>wj", function() vim.cmd.wincmd("j") end, {desc = "Goto window below"})
 vim.keymap.set('n', "<leader>wk", function() vim.cmd.wincmd("k") end, {desc = "Goto window above"})
 vim.keymap.set('n', "<leader>wh", function() vim.cmd.wincmd("h") end, {desc = "Goto window left"})

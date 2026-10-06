@@ -1,5 +1,4 @@
 vim.pack.add({
-  "https://github.com/wurli/jet.nvim",
   "https://github.com/folke/snacks.nvim"
 })
 
