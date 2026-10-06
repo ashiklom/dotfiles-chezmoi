@@ -1,11 +1,13 @@
 [core]
 	excludesfile = ~/.gitignore_global
+{{- with lookPath "gh" }}
 [credential "https://github.com"]
 	helper = 
-	helper = !{{ lookPath "gh" }} auth git-credential
+	helper = !{{ . }} auth git-credential
 [credential "https://gist.github.com"]
 	helper = 
-	helper = !{{ lookPath "gh" }} auth git-credential
+	helper = !{{ . }} auth git-credential
+{{- end }}
 [user]
 	name = Alexey Shiklomanov
 {{- if .is_nasa }}

@@ -122,7 +122,7 @@ wezterm.on('trigger-vim-with-scrollback', function(window, pane)
   window:perform_action(
     -- Change to "NewWindow" for separate window
     act.SpawnCommandInNewTab {
-      args = { '{{ lookPath "nvim" }}', name },
+      args = { '{{ or (lookPath "nvim") (lookPath "vim") "vi" }}', name },
     },
     pane
   )
