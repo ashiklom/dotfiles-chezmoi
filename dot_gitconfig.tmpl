@@ -1,5 +1,26 @@
 [core]
 	excludesfile = ~/.gitignore_global
+
+[credential]
+	helper = cache
+
+[init]
+	defaultBranch = main
+
+[pull]
+  rebase = true
+
+[merge]
+  conflictStyle = zdiff3
+
+[user]
+	name = Alexey Shiklomanov
+{{- if .is_nasa }}
+	email = alexey.shiklomanov@nasa.gov
+{{- else }}
+	email = alexey.shiklomanov@gmail.com
+{{- end }}
+
 {{- with lookPath "gh" }}
 [credential "https://github.com"]
 	helper = 
@@ -8,16 +29,17 @@
 	helper = 
 	helper = !{{ . }} auth git-credential
 {{- end }}
-[user]
-	name = Alexey Shiklomanov
-{{- if .is_nasa }}
-	email = alexey.shiklomanov@nasa.gov
-{{- else }}
-	email = alexey.shiklomanov@gmail.com
+
+{{- if lookPath "nvim" }}
+[diff]
+  tool = nvimdiff
 {{- end }}
-[credential]
-	helper = cache
-[init]
-	defaultBranch = main
-[pull]
-  rebase = true
+
+{{- if lookPath "delta"}}
+[core]
+  pager = delta
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  navigate = true
+{{- end }}
