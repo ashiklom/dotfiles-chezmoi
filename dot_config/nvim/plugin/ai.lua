@@ -21,5 +21,4 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
 vim.keymap.set("n", "<leader>ai", "<cmd>ClaudeCode<CR>", { desc = "Toggle Claude" })
 vim.keymap.set("n", "<leader>ab", "<cmd>ClaudeCodeAdd %<CR>", { desc = "Add buffer to Claude" })
 vim.keymap.set("x", "<leader>as", "<cmd>ClaudeCodeSend<CR>", { desc = "Send selection to Claude" })
-vim.keymap.set("x", "<leader>aa", "<cmd>ClaudeCodeDiffAccept<CR>", { desc = "Accept Claude diff" })
-vim.keymap.set("x", "<leader>ax", "<cmd>ClaudeCodeDiffDeny<CR>", { desc = "Reject Claude diff" })
+vim.keymap.set("x", "<leader>ax", "<cmd>ClaudeCodeSendText /clear<CR>", { desc = "Clear Claude session" })
