@@ -4,7 +4,6 @@ vim.pack.add({
 
 require('snacks').setup({
   bigfile = {},
-  image = {},
   indent = { animate = { enabled = false }},
   lazygit = {},
   rename = {},
