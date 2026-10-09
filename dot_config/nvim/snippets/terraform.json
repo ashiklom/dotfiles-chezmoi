@@ -98,6 +98,24 @@
     ],
     "prefix": "tfr"
   },
+  "tf-ycgs": {
+    "body": [
+      "terraform {",
+      "  required_providers {",
+      "    aws = {",
+      "      source  = \"hashicorp/aws\"",
+      "      version = \"~> 6.0\"",
+      "    }",
+      "  }",
+      "  backend \"s3\" {",
+      "    bucket = \"ycgs-use1-terraform\"",
+      "    region = \"us-east-1\"",
+      "    key    = \"ycgs/${1:}\"",
+      "  }",
+      "}"
+    ],
+    "prefix": "tf-ycgs"
+  },
   "tfaws": {
     "body": [
       "terraform {",
