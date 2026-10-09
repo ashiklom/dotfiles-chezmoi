@@ -30,6 +30,8 @@ require('fzf-lua').register_ui_select()
 
 vim.keymap.set('n', "<leader> ", function() require('fzf-lua').files() end, {desc = "Files"})
 vim.keymap.set('n', "<leader>/", function() require('fzf-lua').live_grep() end, {desc = "Search project"} )
+vim.keymap.set('x', '<leader>/', function() require('fzf-lua').grep_visual() end, {desc = "Search project for selection"})
+vim.keymap.set('n', "<leader>sb", function() require('fzf-lua').grep_curbuf() end, {desc = "Search buffer"} )
 vim.keymap.set('n', "<leader>,", function() require('fzf-lua').resume() end, {desc = "Resume"} )
 vim.keymap.set('n', "<leader>fr", function() require('fzf-lua').oldfiles() end, {desc = "Recent files"})
 vim.keymap.set('n', "<leader>bb", function() require('fzf-lua').buffers() end, {desc = "Buffers"})
@@ -37,7 +39,7 @@ vim.keymap.set('n', "<leader>sh", function() require('fzf-lua').helptags() end, 
 vim.keymap.set('n', "<leader>sk", function() require('fzf-lua').keymaps() end, {desc = "Keymaps"})
 vim.keymap.set('n', "<leader>sw", function() require('fzf-lua').grep_cword() end, {desc = "Search current word"})
 vim.keymap.set('n', "<leader>sW", function() require('fzf-lua').grep_cWORD() end, {desc = "Search current WORD"})
+vim.keymap.set('n', '<leader>sl', function() require('fzf-lua').lsp_workspace_symbols() end, {desc = "Search LSP symbols"})
 vim.keymap.set('n', '<leader>s"', function() require('fzf-lua').registers() end, {desc = "Registers"})
-vim.keymap.set('x', '<leader>/', function() require('fzf-lua').grep_visual() end, {desc = "Search project for selection"})
 
 vim.keymap.set('n', 'z=', function() require('fzf-lua').spell_suggest() end, { desc = "Spell suggest" })
