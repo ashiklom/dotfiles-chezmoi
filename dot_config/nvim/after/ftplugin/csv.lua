@@ -1,8 +1,8 @@
 vim.pack.add({ "https://github.com/hat0uma/csvview.nvim" })
 require('csvview').setup({
   keymaps = {
-    jump_next_field_end = { "<Right>", mode = { "n", "x" }},
-    jump_prev_field_end = { "<Left>", mode = { "n", "x" }},
+    jump_next_field_start = { "<Right>", mode = { "n", "x" }},
+    jump_prev_field_start = { "<Left>", mode = { "n", "x" }},
     jump_next_row = { "<Down>", mode = { "n", "x" }},
     jump_prev_row = { "<Up>", mode = { "n", "x" } }
   }
