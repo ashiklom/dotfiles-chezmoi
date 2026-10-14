@@ -6,6 +6,24 @@ alias isodate="date +%Y-%m-%d"
 
 alias vnv="source .venv/bin/activate"
 
+dotenv() {
+  ENVFILE="${1:-.env}"
+  if [[ ! -f $ENVFILE ]]; then
+    echo "$ENVFILE not found."
+    return 1
+  fi
+  set -a
+  if source $ENVFILE; then
+    echo "Loaded variables from $ENVFILE"
+    local result=0
+  else
+    echo "Failed to load variables from $ENVFILE"
+    local result=1
+  fi
+  set +a
+  return $result
+}
+
 if alias pivssh &> /dev/null; then
   unalias pivssh
 fi
