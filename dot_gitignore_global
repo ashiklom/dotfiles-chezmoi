@@ -5,3 +5,5 @@ __pycache__/
 
 # Temporary files created by R-nvim
 *.tmp.R
+
+**/.claude/settings.local.json
