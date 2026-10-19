@@ -1,0 +1,6 @@
+vim.keymap.set("n", "<leader>|", function()
+  local view = vim.fn.winsaveview()
+  vim.cmd("normal! vip\27")
+  vim.cmd("'<,'>EasyAlign *|")
+  vim.fn.winrestview(view)
+end, { desc = "Align markdown table", buffer = true})

@@ -108,3 +108,5 @@ vim.api.nvim_create_autocmd("FileType", {
     pcall(vim.treesitter.start, ev.buf)
   end,
 })
+
+vim.pack.add({'https://github.com/junegunn/vim-easy-align'})
