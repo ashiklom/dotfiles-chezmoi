@@ -45,6 +45,11 @@ vim.keymap.set('n', "<leader>wk", function() vim.cmd.wincmd("k") end, {desc = "G
 vim.keymap.set('n', "<leader>wh", function() vim.cmd.wincmd("h") end, {desc = "Goto window left"})
 vim.keymap.set('n', "<leader>wl", function() vim.cmd.wincmd("l") end, {desc = "Goto window right"})
 
+vim.keymap.set('n', "<leader>fy", function() vim.fn.setreg("+", vim.fn.expand('%')) end,
+  { desc = "Yank current file name and line" })
+vim.keymap.set('n', "<leader>fY", function() vim.fn.setreg("+", vim.fn.expand('%') .. ':' .. vim.fn.line('.')) end,
+  { desc = "Yank current file name" })
+
 vim.api.nvim_create_autocmd("FileType", {
   group = vim.api.nvim_create_augroup("spelling", { clear = true }),
   pattern = {
