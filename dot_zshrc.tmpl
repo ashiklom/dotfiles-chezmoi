@@ -84,6 +84,7 @@ if (( $+commands[fzf] )); then
 fi
 (( $+commands[tv] )) && eval "$(tv init zsh)"
 (( $+commands[atuin] )) && eval "$(atuin init zsh)"
+(( $+commands[fnm] )) && eval "$(fnm env --use-on-cd --shell zsh)"
 
 MY_SPACKDIR="$HOME/projects/src/spack"
 if [ -f "$MY_SPACKDIR/share/spack/setup-env.sh" ]; then
