@@ -84,10 +84,13 @@ vim.pack.add({'https://github.com/stevearc/conform.nvim'})
 require('conform').setup({
   formatters_by_ft = {
     lua = {"stylua"},
-    python = {"isort", "black"},
+    python = {"ruff_format"},
     r = {"air"},
     terraform = {"tofu_fmt"},
-    sh = {"shfmt"}
+    sh = {"shfmt"},
+    javascript = { "prettierd", "prettier", stop_after_first = true },
+    typescript = { "prettierd", "prettier", stop_after_first = true },
+    html = { "prettierd", "prettier", stop_after_first = true }
   },
   default_format_opts = {
     lsp_format = "fallback"
