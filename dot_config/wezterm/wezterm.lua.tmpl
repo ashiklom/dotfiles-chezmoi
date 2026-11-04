@@ -44,6 +44,16 @@ config.keys = {
     action = act.ActivateTabRelative(1)
   },
   {
+    key = "{",
+    mods = "CTRL|SHIFT|ALT",
+    action = act.MoveTabRelative(-1)
+  },
+  {
+    key = "}",
+    mods = "CTRL|SHIFT|ALT",
+    action = act.MoveTabRelative(1)
+  },
+  {
     key = "\\",
     mods = "LEADER",
     action = act.SplitHorizontal {domain = "CurrentPaneDomain"}
