@@ -19,6 +19,10 @@ ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 # See https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 
+# User-installed completions (e.g., rig). Must be set before compinit (Zim's
+# completion module).
+fpath=("$HOME/.local/share/zsh/site-functions" $fpath)
+
 # ------------------
 # Initialize modules
 # ------------------
